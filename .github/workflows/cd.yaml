@@ -30,7 +30,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH }}
           script: |
-            sudo yum install pm2
+            sudo yum install -y nodejs npm
+            sudo npm install pm2
             pm2 stop app.js  # Arretra l'esecuzione dell'applicazione Node.js utilizzando pm2
 
       - name: Executing remote ssh commands using ssh key
