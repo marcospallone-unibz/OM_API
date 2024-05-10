@@ -31,8 +31,9 @@ jobs:
           key: ${{ secrets.SSH }}
           script: |
             sudo yum install -y nodejs npm
-            sudo npm install pm2
-            pm2 stop app.js  # Arretra l'esecuzione dell'applicazione Node.js utilizzando pm2
+            sudo npm install -g pm2
+            sudo ln -s $(npm root -g)/pm2/bin/pm2 /usr/bin/pm2
+            sudo pm2 stop home/index.js  # Arretra l'esecuzione dell'applicazione Node.js utilizzando pm2
 
       - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
