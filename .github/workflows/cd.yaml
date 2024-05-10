@@ -34,5 +34,5 @@ jobs:
             sudo yum install -y nodejs npm
             sudo npm install -g npm@10.7.0
             sudo npm install
-            ls
+            sudo node home/index.js
             
