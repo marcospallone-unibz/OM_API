@@ -33,6 +33,7 @@ jobs:
             sudo yum -y update
             sudo yum install -y nodejs npm
             sudo npm install express
+            sudo npm install mysql
             sudo npm install -g npm@10.7.0
             sudo npm install
             sudo node home/index.js
