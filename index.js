@@ -21,7 +21,7 @@ connection.connect((err) => {
 
 // Definisci le route e i controller qui...
 
-const PORT = process.env.DB_PORT || 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is in ascolto sulla porta ${PORT}`);
 });

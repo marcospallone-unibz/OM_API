@@ -35,6 +35,8 @@ jobs:
             sudo npm install express
             sudo npm install mysql
             sudo npm install -g npm@10.7.0
+            sudo npm install -g pm2
             sudo npm install
-            sudo node home/index.js
+            sudo pm2 stop index.js
+            sudo pm2 start index.js
             
