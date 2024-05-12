@@ -20,7 +20,7 @@ connection.connect((err) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('RICHIESTA ANDATA A BUON FINE');
   });
 
 const PORT = process.env.PORT || 3000;
