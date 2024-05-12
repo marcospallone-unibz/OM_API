@@ -37,5 +37,6 @@ jobs:
             sudo npm install -g npm@10.7.0
             sudo npm install -g pm2
             sudo npm install
-            sudo pm2 start /home/index.js
+            cd home
+            sudo pm2 start index.js
             
