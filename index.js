@@ -20,7 +20,7 @@ const app = express();
 // });
 
 app.get('/', (req, res) => {
-    res.send('RICHIESTA ANDATA A BUON FINE');
+    res.send('Hello world!');
   });
 
 const PORT = process.env.PORT || 3000;
