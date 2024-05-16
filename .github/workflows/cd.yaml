@@ -30,6 +30,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH }}
           script: |
+            cd home
             sudo yum -y update
             sudo yum install -y nodejs npm
             sudo npm install express
@@ -37,7 +38,6 @@ jobs:
             sudo npm install -g npm@10.7.0
             sudo npm install -g pm2
             sudo npm install
-            cd home
             sudo lsof -ti:3000 | xargs sudo kill || true
             sudo pm2 start index.js -f --name "be"
             
