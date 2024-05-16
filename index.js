@@ -19,11 +19,16 @@ const app = express();
 //   }
 // });
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://34.224.87.98:3000');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', 'https://34.224.87.98:3000');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//   next();
+// });
+
+app.all("/", function(req, res, next) {
+  req.header("Origin", "*"); // ideally the '*' will be your hostname
+  return next();
 });
 
 app.get('/', (req, res) => {
