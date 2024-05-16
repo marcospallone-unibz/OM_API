@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 
 const connection = mysql.createConnection({
-  host: 'be.cdjkupklvmzr.us-east-1.rds.amazonaws.com',
+  host: 'om.cdjkupklvmzr.us-east-1.rds.amazonaws.com',
   user: 'admin',
   password: 'password',
   database: 'om',
