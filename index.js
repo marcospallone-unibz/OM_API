@@ -6,28 +6,21 @@ const app = express();
 
 app.use(cors());
 
-// const connection = mysql.createConnection({
-//   host: 'be.cdjkupklvmzr.us-east-1.rds.amazonaws.com',
-//   user: 'admin',
-//   password: 'password',
-//   database: 'be',
-//   port: 3306
-// });
+const connection = mysql.createConnection({
+  host: 'be.cdjkupklvmzr.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'password',
+  database: 'om',
+  port: 3306
+});
 
-// connection.connect((err) => {
-//   if (err) {
-//     console.error('Errore di connessione al database:', err);
-//   } else {
-//     console.log('Connessione al database riuscita.');
-//   }
-// });
-
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', 'https://34.224.87.98:3000');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   next();
-// });
+connection.connect((err) => {
+  if (err) {
+    console.error('Errore di connessione al database:', err);
+  } else {
+    console.log('Connessione al database riuscita.');
+  }
+});
 
 app.all("/", function(req, res, next) {
   req.header("Origin", "*"); // ideally the '*' will be your hostname
@@ -35,7 +28,24 @@ app.all("/", function(req, res, next) {
 });
 
 app.get('/', (req, res) => {
-  res.send('Hello world!');
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255),
+      surname VARCHAR(255),
+      email VARCHAR(255)
+    )
+  `;
+
+  // Esegui la query per creare la tabella
+  connection.query(createTableQuery, (error, results, fields) => {
+    if (error) {
+      console.error('Errore durante la creazione della tabella:', error);
+      return res.status(500).json({ error: 'Errore durante la creazione della tabella' });
+    }
+    console.log('Tabella users creata con successo!');
+    res.json({ message: 'Tabella users creata con successo!' });
+  });
 });
 
 const PORT = process.env.PORT || 3000;
