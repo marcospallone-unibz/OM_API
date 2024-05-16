@@ -1,7 +1,10 @@
 const express = require('express');
 const mysql = require('mysql');
+const cors = require ('cors');
 
 const app = express();
+
+app.use(cors());
 
 // const connection = mysql.createConnection({
 //   host: 'be.cdjkupklvmzr.us-east-1.rds.amazonaws.com',
