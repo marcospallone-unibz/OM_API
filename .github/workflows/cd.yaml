@@ -39,5 +39,6 @@ jobs:
             sudo npm install -g pm2
             sudo npm install
             sudo lsof -ti:3000 | xargs sudo kill || true
+            sudo pm2 kill
             sudo pm2 start index.js -f --name "be"
             
