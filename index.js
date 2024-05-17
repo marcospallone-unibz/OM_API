@@ -3,6 +3,7 @@ const cors = require ('cors');
 const dbConfig = require('./config/dbConfig')
 const usersConfig = require('./config/usersConfig');
 const { insertNewUser } = require('./controllers/users');
+const createTable = require('./config/usersConfig')
 
 const app = express();
 
