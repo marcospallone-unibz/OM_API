@@ -4,6 +4,7 @@ const dbConfig = require('./config/dbConfig')
 const usersConfig = require('./config/usersConfig');
 const { insertNewUser } = require('./controllers/users');
 const createTable = require('./config/usersConfig')
+const mysql = require('mysql');
 
 const app = express();
 
