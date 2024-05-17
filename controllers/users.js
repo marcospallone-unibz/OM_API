@@ -2,7 +2,7 @@
 
  const insertNewUser = (connection, req, res) => {
     // Recupero dei dati inviati nella richiesta POST
-  const { name, surname, email, password } = req.body;
+  const { name, surname, email, password } = req.query;
 
   // Esecuzione della query di inserimento
   const insertUserQuery = 'INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)';

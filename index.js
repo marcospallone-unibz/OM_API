@@ -9,7 +9,21 @@ const app = express();
 
 app.use(cors());
 
-var connection = null;
+const connection = mysql.createConnection({
+  host: 'om.cdjkupklvmzr.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'password',
+  database: 'om',
+  port: 3306
+});
+
+connection.connect((err) => {
+  if (err) {
+      console.error('Errore di connessione al database:', err);
+  } else {
+      console.log('Connessione al database riuscita.');
+  }
+});
 
 app.all("/", function(req, res, next) {
   req.header("Origin", "*"); // ideally the '*' will be your hostname
@@ -24,17 +38,12 @@ app.post('/newUser', (req, res) => {
   insertNewUser(connection, req, res)
 });
 
-app.post('/setDB', (req, res) => {
-  setDB(connection)
-  res.send('Table created!')
-});
-
 const setDB = (connection) => {
   createTable(connection);
 }
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  connection = dbConfig.connect();
+  setDB(connection)
   console.log(`Server in ascolto sulla porta ${PORT}`);
 });
