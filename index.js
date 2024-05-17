@@ -25,7 +25,7 @@ app.post('/newUser', (req, res) => {
 });
 
 const setDB = (connection) => {
-  usersConfig.createTable(connection);
+  createTable(connection);
 }
 
 const PORT = process.env.PORT || 3000;
