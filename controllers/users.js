@@ -1,6 +1,6 @@
 
 
-export const insertNewUser = (connection, req, res) => {
+ const insertNewUser = (connection, req, res) => {
     // Recupero dei dati inviati nella richiesta POST
   const { name, surname, email, password } = req.body;
 
@@ -15,3 +15,5 @@ export const insertNewUser = (connection, req, res) => {
     res.json({ message: 'Nuovo utente inserito con successo!' });
   });
 } 
+
+module.exports = { insertNewUser }
