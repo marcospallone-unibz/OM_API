@@ -31,6 +31,6 @@ const setDB = (connection) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   connection = dbConfig.connect();
-  setDB();
+  // setDB();
   console.log(`Server in ascolto sulla porta ${PORT}`);
 });
