@@ -26,6 +26,7 @@ app.post('/newUser', (req, res) => {
 
 app.post('/setDB', (req, res) => {
   setDB(connection)
+  res.send('Table created!')
 });
 
 const setDB = (connection) => {
