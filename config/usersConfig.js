@@ -13,10 +13,8 @@ function createTable(connection){
   connection.query(createTableQuery, (error, results, fields) => {
     if (error) {
       console.error('Errore durante la creazione della tabella:', error);
-      return res.status(500).json({ error: 'Errore durante la creazione della tabella' });
     }
     console.log('Tabella users creata con successo!');
-    res.json({ message: 'Tabella users creata con successo!' });
   });
 }
 

@@ -24,6 +24,10 @@ app.post('/newUser', (req, res) => {
   insertNewUser(connection, req, res)
 });
 
+app.post('/setDB', (req, res) => {
+  setDB(connection)
+});
+
 const setDB = (connection) => {
   createTable(connection);
 }
@@ -31,6 +35,5 @@ const setDB = (connection) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   connection = dbConfig.connect();
-  // setDB();
   console.log(`Server in ascolto sulla porta ${PORT}`);
 });
