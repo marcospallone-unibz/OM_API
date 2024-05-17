@@ -8,7 +8,7 @@ const app = express();
 
 app.use(cors());
 
-connection = dbConfig.connect();
+var connection = null;
 
 app.all("/", function(req, res, next) {
   req.header("Origin", "*"); // ideally the '*' will be your hostname
@@ -16,7 +16,7 @@ app.all("/", function(req, res, next) {
 });
 
 app.get('/', (req, res) => {
-  
+  res.send('Hello world!')
 });
 
 app.post('/newUser', (req, res) => {
@@ -29,6 +29,7 @@ const setDB = (connection) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
+  connection = dbConfig.connect();
   setDB();
   console.log(`Server in ascolto sulla porta ${PORT}`);
 });
