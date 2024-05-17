@@ -1,5 +1,5 @@
 
-function authenticateUser(connection, req, res) {
+function authenticateUser(connection, req, callback) {
   const { email, password } = req.query
   if (!email || !password) {
     console.log('Email e password sono obbligatorie');
