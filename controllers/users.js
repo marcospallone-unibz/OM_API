@@ -6,15 +6,13 @@ function authenticateUser(connection, req, res) {
   } else {
     const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
     connection.query(query, [email, password], (err, results) => {
-      if (results.length > 0) {
-        return true;
-      } else {
-        if(err){
-          console.log(err)
-          return false;
-        }
-        return false;
-      }
+      if (err) {
+        callback(err, null);
+    } else if (results.length > 0) {
+        callback(null, true);
+    } else {
+        callback(null, false);
+    }
     });
   }
 }
