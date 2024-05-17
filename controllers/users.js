@@ -1,7 +1,26 @@
 
+function authenticateUser(connection, req, res) {
+  const { email, password } = req.query
+  if (!email || !password) {
+    console.log('Email e password sono obbligatorie');
+  } else {
+    const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
+    connection.query(query, [email, password], (err, results) => {
+      if (results.length > 0) {
+        return true;
+      } else {
+        if(err){
+          console.log(err)
+          return false;
+        }
+        return false;
+      }
+    });
+  }
+}
 
- const insertNewUser = (connection, req, res) => {
-    // Recupero dei dati inviati nella richiesta POST
+function insertNewUser(connection, req, res) {
+  // Recupero dei dati inviati nella richiesta POST
   const { name, surname, email, password } = req.query;
 
   // Esecuzione della query di inserimento
@@ -14,6 +33,6 @@
     console.log('Nuovo utente inserito con successo!');
     res.json({ message: 'Nuovo utente inserito con successo!' });
   });
-} 
+}
 
-module.exports = { insertNewUser }
+module.exports = { insertNewUser, authenticateUser }

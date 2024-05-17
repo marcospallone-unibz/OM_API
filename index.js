@@ -5,6 +5,7 @@ const usersConfig = require('./config/usersConfig');
 const { insertNewUser } = require('./controllers/users');
 const createTable = require('./config/usersConfig')
 const mysql = require('mysql');
+const { authenticateUser } = require('./controllers/users')
 
 const app = express();
 
@@ -37,6 +38,15 @@ app.get('/', (req, res) => {
 
 app.post('/newUser', (req, res) => {
   insertNewUser(connection, req, res)
+});
+
+app.post('/login', (req, res) => {
+  let isLogged = authenticateUser(connection, req, res)
+  if(isLogged){
+    res.send('Login successful!')
+  } else {
+    res.send('Login failed!')
+  }
 });
 
 const setDB = (connection) => {
