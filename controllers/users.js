@@ -37,8 +37,11 @@ function authenticateUser(connection, req, res) {
 }
 
 function insertNewUser(connection, req, res) {
+  console.log('40', + req)
   // Recupero dei dati inviati nella richiesta POST
-  const { name, surname, email, password } = req.query;
+  const { name, surname, email, password } = req.body;
+
+  console.log(name, surname, email, password)
 
   // Esecuzione della query di inserimento
   const insertUserQuery = 'INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)';
@@ -48,7 +51,7 @@ function insertNewUser(connection, req, res) {
       return res.status(500).json({ error: 'Errore durante l\'inserimento dell\'utente' });
     }
     console.log('Nuovo utente inserito con successo!');
-    res.json({ message: 'Nuovo utente inserito con successo!' });
+    res.json({ message: 'Nuovo utente inserito con successo!' + name + surname + email + password });
   });
 }
 
