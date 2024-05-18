@@ -1,7 +1,7 @@
 
 function allUsers(connection, req, res) {
   const query = 'SELECT * FROM users';
-  connection.query(query, [email, password], (err, results) => {
+  connection.query(query, (err, results) => {
     if (err) {
       console.log('Errore: ', err)
       return res.status(500).json({ error: 'Errore' });
