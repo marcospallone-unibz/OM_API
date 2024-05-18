@@ -6,6 +6,7 @@ const { insertNewUser } = require('./controllers/users');
 const createTable = require('./config/usersConfig')
 const mysql = require('mysql');
 const { authenticateUser } = require('./controllers/users')
+const { allUsers } = require('./controllers/users')
 
 const app = express();
 
@@ -34,6 +35,10 @@ app.all("/", function(req, res, next) {
 
 app.get('/', (req, res) => {
   res.send('Hello world!')
+});
+
+app.get('/allUsers', (req, res) => {
+  allUsers(connection, req, res)
 });
 
 app.post('/register', (req, res) => {

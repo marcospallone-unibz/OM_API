@@ -1,4 +1,20 @@
 
+function allUsers(connection, req, res) {
+  const query = 'SELECT * FROM users';
+  connection.query(query, [email, password], (err, results) => {
+    if (err) {
+      console.log('Errore: ', err)
+      return res.status(500).json({ error: 'Errore' });
+    } else if (results.length > 0) {
+      console.log(results)
+      res.json({ message: 'Get all users successful!' });
+    } else {
+      console.log('Errore nella richiesta (?)')
+      res.json({ message: 'Errore nella richiesta (?)' });
+    }
+  });
+}
+
 function authenticateUser(connection, req, res) {
   const { email, password } = req.query
   if (!email || !password) {
@@ -9,13 +25,13 @@ function authenticateUser(connection, req, res) {
       if (err) {
         console.log('Errore: ', err)
         return res.status(500).json({ error: 'Errore durante il login' });
-    } else if (results.length > 0) {
+      } else if (results.length > 0) {
         console.log('Login effettuato')
         res.json({ message: 'Login effettuato!' });
-    } else {
+      } else {
         console.log('Credenziali errate')
         res.json({ message: 'Credenziali errate!' });
-    }
+      }
     });
   }
 }
@@ -36,4 +52,4 @@ function insertNewUser(connection, req, res) {
   });
 }
 
-module.exports = { insertNewUser, authenticateUser }
+module.exports = { insertNewUser, authenticateUser, allUsers }
