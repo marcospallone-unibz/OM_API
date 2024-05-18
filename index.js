@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
   res.send('Hello world!')
 });
 
-app.post('/newUser', (req, res) => {
+app.post('/register', (req, res) => {
   insertNewUser(connection, req, res)
 });
 
