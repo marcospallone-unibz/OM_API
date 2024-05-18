@@ -42,6 +42,7 @@ app.get('/allUsers', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
+  console.log(req, res)
   insertNewUser(connection, req, res)
 });
 
