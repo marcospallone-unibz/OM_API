@@ -1,5 +1,5 @@
 
-function authenticateUser(connection, req, callback) {
+function authenticateUser(connection, req, res) {
   const { email, password } = req.query
   if (!email || !password) {
     console.log('Email e password sono obbligatorie');
@@ -7,11 +7,14 @@ function authenticateUser(connection, req, callback) {
     const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
     connection.query(query, [email, password], (err, results) => {
       if (err) {
-        callback(err, null);
+        console.log('Errore: ', err)
+        return res.status(500).json({ error: 'Errore durante il login' });
     } else if (results.length > 0) {
-        callback(null, true);
+        console.log('Login effettuato')
+        res.json({ message: 'Login effettuato!' });
     } else {
-        callback(null, false);
+        console.log('Credenziali errate')
+        res.json({ message: 'Credenziali errate!' });
     }
     });
   }

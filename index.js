@@ -41,16 +41,7 @@ app.post('/register', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  authenticateUser(connection, req, (err, isAuthenticated) => {
-    if(err){
-      return res.status(500).json({ message: 'Errore del server' });
-    }
-    if(isAuthenticated){
-      res.send('Login successful!')
-    } else {
-      res.send('Login failed!')
-    }
-  })
+  authenticateUser(connection, req, res)
 });
 
 const setDB = (connection) => {
