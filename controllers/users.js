@@ -1,20 +1,4 @@
 
-function allUsers(connection, req, res) {
-  const query = 'SELECT * FROM users';
-  connection.query(query, (err, results) => {
-    if (err) {
-      console.log('Errore: ', err)
-      return res.status(500).json({ error: 'Errore' });
-    } else if (results.length > 0) {
-      console.log(results)
-      res.json({ message: 'Get all users successful!' + results.json() });
-    } else {
-      console.log('Errore nella richiesta (?)')
-      res.json({ message: 'Errore nella richiesta (?)' });
-    }
-  });
-}
-
 function authenticateUser(connection, req, res) {
   const { email, password } = req.body
   if (!email || !password) {
@@ -37,11 +21,8 @@ function authenticateUser(connection, req, res) {
 }
 
 function insertNewUser(connection, req, res) {
-  console.log('40', + req)
   // Recupero dei dati inviati nella richiesta POST
   const { name, surname, email, password } = req.body;
-
-  console.log(name, surname, email, password)
 
   // Esecuzione della query di inserimento
   const insertUserQuery = 'INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)';
@@ -51,8 +32,8 @@ function insertNewUser(connection, req, res) {
       return res.status(500).json({ error: 'Errore durante l\'inserimento dell\'utente' });
     }
     console.log('Nuovo utente inserito con successo!');
-    res.json({ message: 'Nuovo utente inserito con successo!' + name + surname + email + password });
+    res.json({ message: 'Nuovo utente inserito con successo!'});
   });
 }
 
-module.exports = { insertNewUser, authenticateUser, allUsers }
+module.exports = { insertNewUser, authenticateUser }

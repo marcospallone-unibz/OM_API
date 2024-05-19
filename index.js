@@ -1,12 +1,10 @@
 const express = require('express');
 const cors = require ('cors');
-const dbConfig = require('./config/dbConfig')
-const usersConfig = require('./config/usersConfig');
 const { insertNewUser } = require('./controllers/users');
 const createTable = require('./config/usersConfig')
 const mysql = require('mysql');
 const { authenticateUser } = require('./controllers/users')
-const { allUsers } = require('./controllers/users')
+const { allOffices } = require('./controllers/offices')
 
 const app = express();
 
@@ -35,16 +33,11 @@ app.all("/", function(req, res, next) {
   return next();
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello world!')
-});
-
-app.get('/allUsers', (req, res) => {
-  allUsers(connection, req, res)
+app.get('/offices', (req, res) => {
+  allOffices(connection, req, res);
 });
 
 app.post('/register', (req, res) => {
-  console.log(req, res)
   insertNewUser(connection, req, res)
 });
 
