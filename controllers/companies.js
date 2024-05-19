@@ -25,7 +25,7 @@ function insertNewCompany(connection, req, res) {
   const { name, email, password } = req.body;
 
   // Esecuzione della query di inserimento
-  const insertCompanyQuery = 'INSERT INTO companies (name, email, password) VALUES (?, ?, ?, ?)';
+  const insertCompanyQuery = 'INSERT INTO companies (name, email, password) VALUES (?, ?, ?)';
   connection.query(insertCompanyQuery, [name, email, password], (error, results, fields) => {
     if (error) {
       console.error('Errore durante l\'inserimento dell\'azienda:', error);
