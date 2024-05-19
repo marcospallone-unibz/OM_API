@@ -11,7 +11,7 @@ function authenticateUser(connection, req, res) {
         return res.status(500).json({ error: 'Errore durante il login' });
       } else if (results.length > 0) {
         console.log('Login effettuato')
-        res.json({ message: 'Login effettuato!' });
+        res.status(200).json({ message: 'Login effettuato!', code: 200 });
       } else {
         console.log('Credenziali errate')
         res.json({ message: 'Credenziali errate!' });
@@ -32,7 +32,7 @@ function insertNewUser(connection, req, res) {
       return res.status(500).json({ error: 'Errore durante l\'inserimento dell\'utente' });
     }
     console.log('Nuovo utente inserito con successo!');
-    res.json({ message: 'Nuovo utente inserito con successo!'});
+    res.status(200).json({ message: 'Nuovo utente inserito con successo!', code: 200});
   });
 }
 
