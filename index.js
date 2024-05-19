@@ -12,6 +12,8 @@ const app = express();
 
 app.use(cors());
 
+app.use(express.urlencoded({ extended: true }));
+
 const connection = mysql.createConnection({
   host: 'om.cdjkupklvmzr.us-east-1.rds.amazonaws.com',
   user: 'admin',
