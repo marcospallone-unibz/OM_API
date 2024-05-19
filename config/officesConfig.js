@@ -5,7 +5,8 @@ function createTable(connection){
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255),
       city VARCHAR(255),
-      address VARCHAR(255)
+      address VARCHAR(255),
+      company INT
     )
   `;
   
@@ -13,7 +14,7 @@ function createTable(connection){
     if (error) {
       console.error('Errore durante la creazione della tabella:', error);
     }
-    console.log('Tabella users creata con successo!');
+    console.log('Tabella companies creata con successo!');
   });
 }
 

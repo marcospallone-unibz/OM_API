@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require ('cors');
-const { insertNewUser } = require('./controllers/users');
-const createTable = require('./config/usersConfig')
+const { insertNewCompany } = require('./controllers/companies');
+const createTable = require('./config/companiesConfig')
 const mysql = require('mysql');
-const { authenticateUser } = require('./controllers/users')
+const { authenticateCompany } = require('./controllers/companies')
 const { allOffices } = require('./controllers/offices')
 
 const app = express();
@@ -38,11 +38,11 @@ app.get('/offices', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  insertNewUser(connection, req, res)
+  insertNewCompany(connection, req, res)
 });
 
 app.post('/login', (req, res) => {
-  authenticateUser(connection, req, res)
+  authenticateCompany(connection, req, res)
 });
 
 const setDB = (connection) => {

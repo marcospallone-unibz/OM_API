@@ -1,10 +1,9 @@
 
 function createTable(connection){
     const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE IF NOT EXISTS companies (
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255),
-      surname VARCHAR(255),
       email VARCHAR(255),
       password VARCHAR(255)
     )
@@ -14,7 +13,7 @@ function createTable(connection){
     if (error) {
       console.error('Errore durante la creazione della tabella:', error);
     }
-    console.log('Tabella users creata con successo!');
+    console.log('Tabella companies creata con successo!');
   });
 }
 
