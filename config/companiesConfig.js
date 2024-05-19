@@ -1,5 +1,5 @@
 
-function createTable(connection){
+function createCompaniesTable(connection){
     const createTableQuery = `
     CREATE TABLE IF NOT EXISTS companies (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -17,7 +17,7 @@ function createTable(connection){
   });
 }
 
-module.exports = createTable
+module.exports = { createCompaniesTable }
 
 
 

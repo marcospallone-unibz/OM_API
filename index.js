@@ -1,10 +1,11 @@
 const express = require('express');
 const cors = require ('cors');
 const { insertNewCompany } = require('./controllers/companies');
-const createTable = require('./config/companiesConfig')
+const { createCompaniesTable } = require('./config/companiesConfig')
+const { createOfficiesTable } = require('./config/officesConfig')
 const mysql = require('mysql');
 const { authenticateCompany } = require('./controllers/companies')
-const { allOffices } = require('./controllers/offices')
+const { allOffices } = require('./controllers/offices');
 
 const app = express();
 
@@ -46,7 +47,8 @@ app.post('/login', (req, res) => {
 });
 
 const setDB = (connection) => {
-  createTable(connection);
+  createCompaniesTable(connection);
+  createOfficiesTable(connection);
 }
 
 const PORT = process.env.PORT || 3000;

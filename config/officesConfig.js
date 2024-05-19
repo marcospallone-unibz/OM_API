@@ -1,5 +1,5 @@
 
-function createTable(connection){
+function createOfficiesTable(connection){
     const createTableQuery = `
     CREATE TABLE IF NOT EXISTS offices (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -18,4 +18,4 @@ function createTable(connection){
   });
 }
 
-module.exports = createTable
+module.exports = { createOfficiesTable }
