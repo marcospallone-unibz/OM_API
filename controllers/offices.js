@@ -1,7 +1,7 @@
 
 function allOffices(connection, req, res) {
   console.log('IDREQ', req.params)
-  console.log('REQUEST', req)
+  console.log('REQUEST', req.query.id)
     const query = 'SELECT * FROM offices WHERE company = ?';
     connection.query(query, [req.params.id], (err, results) => {
       if (err) {
