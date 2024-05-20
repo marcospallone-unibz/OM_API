@@ -5,15 +5,13 @@ const { createCompaniesTable } = require('./config/companiesConfig')
 const { createOfficiesTable } = require('./config/officesConfig')
 const mysql = require('mysql');
 const { authenticateCompany } = require('./controllers/companies')
-const { allOffices, verifyToken } = require('./controllers/offices');
+const { allOffices } = require('./controllers/offices');
 
 const app = express();
 
 app.use(cors());
 
 app.use(express.json());
-
-const companyID = null;
 
 const connection = mysql.createConnection({
   host: 'om.cdjkupklvmzr.us-east-1.rds.amazonaws.com',
@@ -36,7 +34,8 @@ app.all("/", function(req, res, next) {
   return next();
 });
 
-app.get('/offices', verifyToken, (req, res) => {
+app.get('/offices', (req, res) => {
+  console.log(res)
   allOffices(connection, req, res);
 });
 
