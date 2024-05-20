@@ -14,7 +14,7 @@ function createOfficiesTable(connection){
     if (error) {
       console.error('Errore durante la creazione della tabella:', error);
     }
-    console.log('Tabella companies creata con successo!');
+    console.log('Tabella officies creata con successo!');
   });
 }
 

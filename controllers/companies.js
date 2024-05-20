@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 
 function authenticateCompany(connection, req, res) {
   const { email, password } = req.body
@@ -11,7 +12,8 @@ function authenticateCompany(connection, req, res) {
         return res.status(500).json({ error: 'Errore durante il login' });
       } else if (results.length > 0) {
         console.log('Login effettuato')
-        res.status(200).json({ message: 'Login effettuato!', code: 200, company: results[0].name });
+        const token = crypto.randomBytes(32).toString('hex');
+        res.status(200).json({ message: 'Login effettuato!', code: 200, token: token });
       } else {
         console.log('Credenziali errate')
         res.json({ message: 'Credenziali errate!' });
