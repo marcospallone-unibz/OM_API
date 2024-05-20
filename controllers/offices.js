@@ -1,7 +1,7 @@
 
 function allOffices(connection, req, res) {
-    const query = 'SELECT * FROM offices';
-    connection.query(query, (err, results) => {
+    const query = 'SELECT * FROM offices WHERE company = ?';
+    connection.query(query, [id], (err, results) => {
       if (err) {
         console.log('Errore: ', err)
         return res.status(500).json({ error: 'Errore' });
