@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 function allOffices(connection, req, res) {
     const query = 'SELECT * FROM offices';
     connection.query(query, (err, results) => {
@@ -14,4 +16,22 @@ function allOffices(connection, req, res) {
     });
   }
 
-  module.exports = { allOffices }
+  function verifyToken(req, res, next) {
+    // Ottieni il token dall'intestazione Authorization
+    const token = req.headers['authorization'];
+    if (!token) {
+      return res.status(401).json({ message: 'Token mancante' });
+    }
+  
+    // Verifica il token
+    jwt.verify(token, 'secret_key', (err, decoded) => {
+      if (err) {
+        return res.status(403).json({ message: 'Token non valido' });
+      }
+      // Decodifica il token e aggiungi l'utente all'oggetto della richiesta
+      req.user = decoded;
+      next();
+    });
+  }
+
+  module.exports = { allOffices, verifyToken }

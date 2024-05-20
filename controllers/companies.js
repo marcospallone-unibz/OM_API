@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 function authenticateCompany(connection, req, res) {
   const { email, password } = req.body
@@ -12,7 +12,7 @@ function authenticateCompany(connection, req, res) {
         return res.status(500).json({ error: 'Errore durante il login' });
       } else if (results.length > 0) {
         console.log('Login effettuato')
-        const token = crypto.randomBytes(32).toString('hex');
+        const token = jwt.sign({ id: results[0].id }, 'secret_key', { expiresIn: '3h' });
         res.status(200).json({ message: 'Login effettuato!', code: 200, token: token });
       } else {
         console.log('Credenziali errate')
