@@ -5,7 +5,7 @@ const { createUsersTable } = require('./config/usersConfig')
 const { createOfficiesTable } = require('./config/officesConfig')
 const mysql = require('mysql');
 const { authenticateUser } = require('./controllers/users')
-const { allOffices, insertNewOffice, deleteOffice } = require('./controllers/offices');
+const { allOffices, insertNewOffice, deleteOffice, getOfficeByID } = require('./controllers/offices');
 const { createDevicesTable } = require('./config/devicesConfig');
 
 const app = express();
@@ -38,6 +38,11 @@ app.all("/", function(req, res, next) {
 app.get('/offices', (req, res) => {
   console.log(res)
   allOffices(connection, req, res);
+});
+
+app.get('/singleOffice', (req, res) => {
+  console.log(res)
+  getOfficeByID(connection, req, res);
 });
 
 app.post('/register', (req, res) => {

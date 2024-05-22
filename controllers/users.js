@@ -11,7 +11,7 @@ function authenticateUser(connection, req, res) {
         return res.status(500).json({ error: 'Errore durante il login' });
       } else if (results.length > 0) {
         console.log('Login effettuato')
-        res.status(200).json({ message: 'Login effettuato!', code: 200, id: results[0].id, company: results[0].company });
+        res.status(200).json({ message: 'Login effettuato!', code: 200, id: results[0].id, company: results[0].company, admin: results[0].admin});
       } else {
         console.log('Credenziali errate')
         res.json({ message: 'Credenziali errate!' });

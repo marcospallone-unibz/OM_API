@@ -16,6 +16,23 @@ function allOffices(connection, req, res) {
   });
 }
 
+function getOfficeByID(connection, req, res) {
+
+  const query = 'SELECT * FROM offices WHERE id = ?';
+  connection.query(query, [req.query.id], (err, results) => {
+    if (err) {
+      console.log('Errore: ', err)
+      return res.status(500).json({ error: 'Errore' });
+    } else if (results.length > 0) {
+      console.log(results)
+      res.json({ message: 'Get office successful!', office: results });
+    } else {
+      console.log('Errore nella richiesta (?)')
+      res.json({ message: 'Errore nella richiesta (?)' });
+    }
+  });
+}
+
 function insertNewOffice(connection, req, res) {
   const { name, city, address, company } = req.body;
   const insertOfficeQuery = 'INSERT INTO offices (name, city, address, company) VALUES (?, ?, ?, ?)';
@@ -42,4 +59,4 @@ function deleteOffice(connection, req, res) {
   });
 }
 
-module.exports = { allOffices, insertNewOffice, deleteOffice }
+module.exports = { allOffices, getOfficeByID, insertNewOffice, deleteOffice }
