@@ -8,7 +8,6 @@ function allOffices(connection, req, res) {
       return res.status(500).json({ error: 'Errore' });
     } else if (results.length > 0) {
       console.log(results)
-      companyID = req.query.id
       res.json({ message: 'Get all offices successful!', offices: results });
     } else {
       console.log('Errore nella richiesta (?)')
@@ -18,9 +17,9 @@ function allOffices(connection, req, res) {
 }
 
 function insertNewOffice(connection, req, res) {
-  const { name, city, address } = req.body;
+  const { name, city, address, company } = req.body;
   const insertOfficeQuery = 'INSERT INTO offices (name, city, address, company) VALUES (?, ?, ?, ?)';
-  connection.query(insertOfficeQuery, [name, city, address, companyID], (error, results, fields) => {
+  connection.query(insertOfficeQuery, [name, city, address, company], (error, results, fields) => {
     if (error) {
       console.error('Errore durante l\'inserimento dell\'ufficio:', error);
       return res.status(500).json({ error: 'Errore durante l\'inserimento dell\'ufficio' });
