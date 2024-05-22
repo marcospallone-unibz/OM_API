@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require ('cors');
-const { insertNewCompany } = require('./controllers/companies');
-const { createCompaniesTable } = require('./config/companiesConfig')
+const { insertNewUser } = require('./controllers/users');
+const { createUsersTable } = require('./config/usersConfig')
 const { createOfficiesTable } = require('./config/officesConfig')
 const mysql = require('mysql');
-const { authenticateCompany } = require('./controllers/companies')
-const { allOffices } = require('./controllers/offices');
+const { authenticateUser } = require('./controllers/users')
+const { allOffices, insertNewOffice, deleteOffice } = require('./controllers/offices');
+const { createDevicesTable } = require('./config/devicesConfig');
 
 const app = express();
 
@@ -40,16 +41,25 @@ app.get('/offices', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  insertNewCompany(connection, req, res)
+  insertNewUser(connection, req, res)
 });
 
 app.post('/login', (req, res) => {
-  authenticateCompany(connection, req, res)
+  authenticateUser(connection, req, res)
+});
+
+app.post('/newOffice', (req, res) => {
+  insertNewOffice(connection, req, res)
+});
+
+app.post('/deleteOffice', (req, res) => {
+  deleteOffice(connection, req, res)
 });
 
 const setDB = (connection) => {
-  createCompaniesTable(connection);
+  createUsersTable(connection);
   createOfficiesTable(connection);
+  createDevicesTable(connection);
 }
 
 const PORT = process.env.PORT || 3000;

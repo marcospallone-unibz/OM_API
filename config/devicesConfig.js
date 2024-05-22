@@ -1,11 +1,10 @@
-
-function createCompaniesTable(connection){
+function createDevicesTable(connection){
     const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS companies (
+    CREATE TABLE IF NOT EXISTS devices (
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255),
-      email VARCHAR(255),
-      password VARCHAR(255)
+      state BOOLEAN DEFAULT false,
+      office INT
     )
   `;
   
@@ -13,11 +12,8 @@ function createCompaniesTable(connection){
     if (error) {
       console.error('Errore durante la creazione della tabella:', error);
     }
-    console.log('Tabella companies creata con successo!');
+    console.log('Tabella devices creata con successo!');
   });
 }
 
-module.exports = { createCompaniesTable }
-
-
-
+module.exports = { createDevicesTable }
