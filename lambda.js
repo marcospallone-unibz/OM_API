@@ -37,5 +37,5 @@ http.createServer(async (req, res) => {
         res.end(JSON.stringify({ message: 'Method not allowed' }));
     }
 }).listen(3000, () => {
-    console.log('Server listening on port 3000');
+    console.log('Server is listening on port 3000');
 });
