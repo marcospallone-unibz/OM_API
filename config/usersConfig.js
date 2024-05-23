@@ -6,8 +6,7 @@ function createUsersTable(connection){
       name VARCHAR(255),
       email VARCHAR(255),
       password VARCHAR(255),
-      company INT,
-      admin BOOLEAN DEFAULT false
+      company INT
     )
   `;
   

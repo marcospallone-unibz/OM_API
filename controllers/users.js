@@ -1,4 +1,20 @@
 
+function allUsersLength(connection) {
+  const query = 'SELECT * FROM users';
+    connection.query(query, (err, results) => {
+      if (err) {
+        console.log('Errore: ', err)
+        return 0;
+      } else if (results.length > 0) {
+        console.log('GET utenti a buon fine')
+        return results.length;
+      } else {
+        console.log('Richiesta errata')
+        return 0;
+      }
+    });
+}
+
 function authenticateUser(connection, req, res) {
   const { email, password } = req.body
   if (!email || !password) {
@@ -11,7 +27,7 @@ function authenticateUser(connection, req, res) {
         return res.status(500).json({ error: 'Errore durante il login' });
       } else if (results.length > 0) {
         console.log('Login effettuato')
-        res.status(200).json({ message: 'Login effettuato!', code: 200, id: results[0].id, company: results[0].company, admin: results[0].admin});
+        res.status(200).json({ message: 'Login effettuato!', code: 200, id: results[0].id, company: results[0].company});
       } else {
         console.log('Credenziali errate')
         res.json({ message: 'Credenziali errate!' });
@@ -23,6 +39,11 @@ function authenticateUser(connection, req, res) {
 function insertNewUser(connection, req, res) {
   // Recupero dei dati inviati nella richiesta POST
   const { name, email, password, company } = req.body;
+
+  if(company == null){
+    const results = allUsersLength(connection);
+    company = results + 1;
+  }
 
   // Esecuzione della query di inserimento
   const insertUserQuery = 'INSERT INTO users (name, email, password, company) VALUES (?, ?, ?, ?)';
