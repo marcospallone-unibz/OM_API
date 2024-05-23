@@ -7,7 +7,7 @@ const mysql = require('mysql');
 const { authenticateUser } = require('./controllers/users')
 const { allOffices, insertNewOffice, deleteOffice, getOfficeByID } = require('./controllers/offices');
 const { createDevicesTable } = require('./config/devicesConfig');
-const { insertNewDevice, allDevices, getDeviceByID, updateDevice } = require('./controllers/devices');
+const { insertNewDevice, allDevices, getDeviceByID, updateDevice, deleteDevice } = require('./controllers/devices');
 
 const app = express();
 
@@ -78,6 +78,10 @@ app.post('/newDevice', (req, res) => {
 
 app.post('/updateDevice', (req, res) => {
   updateDevice(connection, req, res)
+});
+
+app.post('/deleteDevice', (req, res) => {
+  deleteDevice(connection, req, res)
 });
 
 const setDB = (connection) => {
