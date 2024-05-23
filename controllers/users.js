@@ -38,7 +38,7 @@ function authenticateUser(connection, req, res) {
 
 function insertNewUser(connection, req, res) {
   // Recupero dei dati inviati nella richiesta POST
-  const { name, email, password, company } = req.body;
+  var { name, email, password, company } = req.body;
 
   if(company == null){
     const results = allUsersLength(connection);
