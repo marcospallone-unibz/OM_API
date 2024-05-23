@@ -7,7 +7,7 @@ const mysql = require('mysql');
 const { authenticateUser } = require('./controllers/users')
 const { allOffices, insertNewOffice, deleteOffice, getOfficeByID } = require('./controllers/offices');
 const { createDevicesTable } = require('./config/devicesConfig');
-const { insertNewDevice } = require('./controllers/devices');
+const { insertNewDevice, allDevices } = require('./controllers/devices');
 
 const app = express();
 
@@ -39,6 +39,11 @@ app.all("/", function(req, res, next) {
 app.get('/offices', (req, res) => {
   console.log(res)
   allOffices(connection, req, res);
+});
+
+app.get('/devices', (req, res) => {
+  console.log(res)
+  allDevices(connection, req, res);
 });
 
 app.get('/singleOffice', (req, res) => {
