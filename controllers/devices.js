@@ -15,6 +15,23 @@ function allDevices(connection, req, res) {
   });
 }
 
+function getDeviceByID(connection, req, res) {
+
+  const query = 'SELECT * FROM devices WHERE id = ?';
+  connection.query(query, [req.query.id], (err, results) => {
+    if (err) {
+      console.log('Errore: ', err)
+      return res.status(500).json({ error: 'Errore' });
+    } else if (results.length > 0) {
+      console.log(results)
+      res.json({ message: 'Get all devices successful!', device: results });
+    } else {
+      console.log('Errore nella richiesta (?)')
+      res.json({ message: 'Errore nella richiesta (?)' });
+    }
+  });
+}
+
 function insertNewDevice(connection, req, res) {
   const { name, state, office } = req.body;
   const insertDeviceQuery = 'INSERT INTO devices (name, state, office) VALUES (?, ?, ?)';
@@ -41,4 +58,4 @@ function deleteDevice(connection, req, res) {
   });
 }
 
-module.exports = { allDevices, insertNewDevice, deleteDevice }
+module.exports = { allDevices, getDeviceByID, insertNewDevice, deleteDevice }

@@ -51,6 +51,11 @@ app.get('/singleOffice', (req, res) => {
   getOfficeByID(connection, req, res);
 });
 
+app.get('/singleDevice', (req, res) => {
+  console.log(res)
+  getOfficeByID(connection, req, res);
+});
+
 app.post('/register', (req, res) => {
   insertNewUser(connection, req, res)
 });
