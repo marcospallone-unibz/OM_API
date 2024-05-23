@@ -40,7 +40,7 @@ function insertNewUser(connection, req, res) {
   // Recupero dei dati inviati nella richiesta POST
   var { name, email, password, company } = req.body;
 
-  if(company == null){
+  if(company == NaN){
     const results = allUsersLength(connection);
     company = results + 1;
   }
