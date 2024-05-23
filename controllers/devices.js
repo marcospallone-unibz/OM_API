@@ -45,6 +45,19 @@ function insertNewDevice(connection, req, res) {
   });
 }
 
+function updateDevice(connection, req, res) {
+  const { state, deviceId } = req.body;
+  const insertDeviceQuery = 'UPDATE devices SET state = ? WHERE id = ?';
+  connection.query(insertDeviceQuery, [state, deviceId], (error, results, fields) => {
+    if (error) {
+      console.error('Errore durante l\'inserimento del device:', error);
+      return res.status(500).json({ error: 'Errore durante l\'inserimento del device' });
+    }
+    console.log('Nuovo device inserito con successo!');
+    res.status(200).json({ message: 'Nuovo device inserito con successo!', code: 200 });
+  });
+}
+
 function deleteDevice(connection, req, res) {
   const { id } = req.body;
   const deleteDeviceQuery = 'DELETE FROM devices WHERE id = ?';
@@ -58,4 +71,4 @@ function deleteDevice(connection, req, res) {
   });
 }
 
-module.exports = { allDevices, getDeviceByID, insertNewDevice, deleteDevice }
+module.exports = { allDevices, getDeviceByID, insertNewDevice, updateDevice, deleteDevice }
