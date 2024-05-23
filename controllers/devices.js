@@ -1,4 +1,3 @@
-const officeID = null;
 function allDevices(connection, req, res) {
 
   const query = 'SELECT * FROM devices WHERE office = ?';
@@ -8,7 +7,6 @@ function allDevices(connection, req, res) {
       return res.status(500).json({ error: 'Errore' });
     } else if (results.length > 0) {
       console.log(results)
-      officeID = req.query.id
       res.json({ message: 'Get all devices successful!', offices: results });
     } else {
       console.log('Errore nella richiesta (?)')
@@ -18,9 +16,9 @@ function allDevices(connection, req, res) {
 }
 
 function insertNewDevice(connection, req, res) {
-  const { name, state } = req.body;
+  const { name, state, office } = req.body;
   const insertDeviceQuery = 'INSERT INTO devices (name, state, office) VALUES (?, ?, ?)';
-  connection.query(insertDeviceQuery, [name, state, officeID], (error, results, fields) => {
+  connection.query(insertDeviceQuery, [name, state, office], (error, results, fields) => {
     if (error) {
       console.error('Errore durante l\'inserimento del device:', error);
       return res.status(500).json({ error: 'Errore durante l\'inserimento del device' });
