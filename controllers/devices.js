@@ -47,6 +47,8 @@ function insertNewDevice(connection, req, res) {
 
 function updateDevice(connection, req, res) {
   const { state, deviceId } = req.body;
+  console.log(state)
+  console.log(deviceId)
   const insertDeviceQuery = 'UPDATE devices SET state = ? WHERE id = ?';
   connection.query(insertDeviceQuery, [state, deviceId], (error, results, fields) => {
     if (error) {
