@@ -58,8 +58,9 @@ app.get('/test', (req, res) => {
   let message = {
     FunctionToCall: 'test',
     Connection: connection,
-    Req: req,
-    Res: res
+    RequestData: {
+      body: req.body
+    }
   }
   sendSnsMessage(message)
 });
