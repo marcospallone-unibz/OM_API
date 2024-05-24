@@ -56,7 +56,7 @@ app.get('/offices', (req, res) => {
 
 app.get('/test', (req, res) => {
   let message = {
-    FunctionToCall: 'test',
+    func: 'test',
     RequestData: {
       body: 'body'
     }
