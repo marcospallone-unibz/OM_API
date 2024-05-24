@@ -1,5 +1,5 @@
 const express = require('express');
-const cors = require ('cors');
+const cors = require('cors');
 const { insertNewUser } = require('./controllers/users');
 const { createUsersTable } = require('./config/usersConfig')
 const { createOfficiesTable } = require('./config/officesConfig')
@@ -13,16 +13,13 @@ const sns = new AWS.SNS({ region: 'us-east-1' }); // Assicurati di specificare l
 
 const topicArn = 'arn:aws:sns:us-east-1:869141024194:om'; // Sostituisci con il tuo ARN del topic SNS
 
-const sendSnsMessage = (func, connection, req, res) => {
-    const params = {
-        TopicArn: topicArn,
-        FunctionToCall: func,
-        Connection: connection,
-        Req: req,
-        Res:res
-    };
+const sendSnsMessage = (message) => {
+  const params = {
+    Message: JSON.stringify(message),
+    TopicArn: topicArn
+  };
 
-    return sns.publish(params).promise();
+  return sns.publish(params).promise();
 };
 
 const app = express();
@@ -41,13 +38,13 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) {
-      console.error('Errore di connessione al database:', err);
+    console.error('Errore di connessione al database:', err);
   } else {
-      console.log('Connessione al database riuscita.');
+    console.log('Connessione al database riuscita.');
   }
 });
 
-app.all("/", function(req, res, next) {
+app.all("/", function (req, res, next) {
   req.header("Origin", "*"); // ideally the '*' will be your hostname
   return next();
 });
@@ -58,7 +55,13 @@ app.get('/offices', (req, res) => {
 });
 
 app.get('/test', (req, res) => {
-  sendSnsMessage('test', connection, req, res)
+  let message = {
+    FunctionToCall: 'test',
+    Connection: connection,
+    Req: req,
+    Res: res
+  }
+  sendSnsMessage(message)
 });
 
 app.get('/devices', (req, res) => {
