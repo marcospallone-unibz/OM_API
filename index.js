@@ -8,6 +8,22 @@ const { authenticateUser } = require('./controllers/users')
 const { allOffices, insertNewOffice, deleteOffice, getOfficeByID } = require('./controllers/offices');
 const { createDevicesTable } = require('./config/devicesConfig');
 const { insertNewDevice, allDevices, getDeviceByID, updateDevice, deleteDevice } = require('./controllers/devices');
+const AWS = require('aws-sdk');
+const sns = new AWS.SNS({ region: 'us-east-1' }); // Assicurati di specificare la regione corretta
+
+const topicArn = 'arn:aws:sns:us-east-1:869141024194:om'; // Sostituisci con il tuo ARN del topic SNS
+
+const sendSnsMessage = (func, connection, req, res) => {
+    const params = {
+        TopicArn: topicArn,
+        FunctionToCall: func,
+        Connection: connection,
+        Req: req,
+        Res:res
+    };
+
+    return sns.publish(params).promise();
+};
 
 const app = express();
 
@@ -39,6 +55,10 @@ app.all("/", function(req, res, next) {
 app.get('/offices', (req, res) => {
   console.log(res)
   allOffices(connection, req, res);
+});
+
+app.get('/test', (req, res) => {
+  sendSnsMessage('test', connection, req, res)
 });
 
 app.get('/devices', (req, res) => {

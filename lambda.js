@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const sns = new AWS.SNS({ region: 'us-east-1' }); // Assicurati di specificare la regione corretta
 
-const topicArn = 'arn:aws:sns:us-east-1:869141024194:test'; // Sostituisci con il tuo ARN del topic SNS
+const topicArn = 'arn:aws:sns:us-east-1:869141024194:om'; // Sostituisci con il tuo ARN del topic SNS
 
 const sendSnsMessage = (message) => {
     const params = {
