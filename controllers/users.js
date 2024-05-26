@@ -37,15 +37,11 @@ function authenticateUser(connection, req, res) {
 }
 
 function insertNewUser(connection, req, res) {
-  // Recupero dei dati inviati nella richiesta POST
   var { name, email, password, company } = req.body;
-
   if(company == NaN){
     const results = allUsersLength(connection);
     company = results + 1;
   }
-
-  // Esecuzione della query di inserimento
   const insertUserQuery = 'INSERT INTO users (name, email, password, company) VALUES (?, ?, ?, ?)';
   connection.query(insertUserQuery, [name, email, password, company], (error, results, fields) => {
     if (error) {

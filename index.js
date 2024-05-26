@@ -50,67 +50,168 @@ app.all("/", function (req, res, next) {
 });
 
 app.get('/offices', (req, res) => {
-  console.log(res)
+  // let message = {
+  //   FunctionToCall: 'allOffices',
+  //   RequestData: {
+  //     id: req.query.id
+  //   }
+  // }
+  // sendSnsMessage(message)
+
   allOffices(connection, req, res);
 });
 
 app.get('/test', (req, res) => {
   let message = {
-    func: 'test',
+    FunctionToCall: 'test',
     RequestData: {
       body: 'body'
     }
   }
-  sendSnsMessage(message)
+  console.log(res)
+  // sendSnsMessage(message)
 });
 
 app.get('/devices', (req, res) => {
-  console.log(res)
+  // let message = {
+  //   func: 'allDevices',
+  //   RequestData: {
+  //     id: req.query.id
+  //   }
+  // }
+  // sendSnsMessage(message);
+
   allDevices(connection, req, res);
 });
 
 app.get('/singleOffice', (req, res) => {
-  console.log(res)
+  // let message = {
+  //   FunctionToCall: 'getOfficeByID',
+  //   RequestData: {
+  //     id: req.query.id
+  //   }
+  // }
+  // sendSnsMessage(message);
+
   getOfficeByID(connection, req, res);
 });
 
 app.get('/singleDevice', (req, res) => {
-  console.log(res)
+  // let message = {
+  //   FunctionToCall: 'getDeviceByID',
+  //   RequestData: {
+  //     id: req.query.id
+  //   }
+  // }
+  // sendSnsMessage(message)
+
   getDeviceByID(connection, req, res);
 });
 
 app.post('/register', (req, res) => {
-  insertNewUser(connection, req, res)
+  let message = {
+    FunctionToCall: 'insertNewUser',
+    RequestData: {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      company: req.body.company
+    }
+  }
+  sendSnsMessage(message)
+
+  // insertNewUser(connection, req, res)
 });
 
 app.post('/login', (req, res) => {
+  // let message = {
+  //   FunctionToCall: 'authenticateUser',
+  //   RequestData: {
+  //     email: req.body.email,
+  //     password: req.body.password
+  //   }
+  // }
+  // sendSnsMessage(message)
+
   authenticateUser(connection, req, res)
 });
 
 app.post('/newOffice', (req, res) => {
-  insertNewOffice(connection, req, res)
+  let message = {
+    FunctionToCall: 'insertNewOffice',
+    RequestData: {
+      name: req.body.name,
+      city: req.body.city,
+      address: req.body.address,
+      company: req.body.company
+    }
+  }
+  sendSnsMessage(message)
+
+  // insertNewOffice(connection, req, res)
 });
 
 app.post('/deleteOffice', (req, res) => {
-  deleteOffice(connection, req, res)
+  let message = {
+    FunctionToCall: 'deleteOffice',
+    RequestData: {
+      id: req.body.id
+    }
+  }
+  sendSnsMessage(message)
+
+  // deleteOffice(connection, req, res)
 });
 
 app.post('/newDevice', (req, res) => {
-  insertNewDevice(connection, req, res)
+  let message = {
+    func: 'insertNewDevice',
+    RequestData: {
+      name: req.body.name,
+      state: req.body.state,
+      office: req.body.office
+    }
+  }
+  sendSnsMessage(message)
+  
+  // insertNewDevice(connection, req, res)
 });
 
 app.post('/updateDevice', (req, res) => {
-  updateDevice(connection, req, res)
+  let message = {
+    FunctionToCall: 'updateDevice',
+    RequestData: {
+      state: req.body.state,
+      deviceId: req.body.deviceId
+    }
+  }
+  sendSnsMessage(message)
+
+  // updateDevice(connection, req, res)
 });
 
 app.post('/deleteDevice', (req, res) => {
-  deleteDevice(connection, req, res)
+  let message = {
+    FunctionToCall: 'deleteDevice',
+    RequestData: {
+      id: req.body.id
+    }
+  }
+  sendSnsMessage(message)
+
+  // deleteDevice(connection, req, res)
 });
 
 const setDB = (connection) => {
-  createUsersTable(connection);
-  createOfficiesTable(connection);
-  createDevicesTable(connection);
+  let message = {
+    FunctionToCall: 'createTables',
+    RequestData: {}
+  }
+  sendSnsMessage(message)
+
+  // createUsersTable(connection);
+  // createOfficiesTable(connection);
+  // createDevicesTable(connection);
 }
 
 const PORT = process.env.PORT || 3000;

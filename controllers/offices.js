@@ -17,7 +17,6 @@ function allOffices(connection, req, res) {
 }
 
 function getOfficeByID(connection, req, res) {
-
   const query = 'SELECT * FROM offices WHERE id = ?';
   connection.query(query, [req.query.id], (err, results) => {
     if (err) {

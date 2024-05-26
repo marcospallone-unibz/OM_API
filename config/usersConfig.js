@@ -19,6 +19,3 @@ function createUsersTable(connection){
 }
 
 module.exports = { createUsersTable }
-
-
-
