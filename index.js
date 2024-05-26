@@ -119,6 +119,7 @@ app.post('/register', (req, res) => {
     }
   }
   sendSnsMessage(message)
+  res.send('Utente registrato');
 
   // insertNewUser(connection, req, res)
 });
