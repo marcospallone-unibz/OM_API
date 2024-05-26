@@ -148,6 +148,7 @@ app.post('/newOffice', (req, res) => {
     }
   }
   sendSnsMessage(message)
+  res.send('Ufficio registrato');
 
   // insertNewOffice(connection, req, res)
 });
@@ -160,6 +161,7 @@ app.post('/deleteOffice', (req, res) => {
     }
   }
   sendSnsMessage(message)
+  res.send('Ufficio eliminato');
 
   // deleteOffice(connection, req, res)
 });
@@ -174,6 +176,7 @@ app.post('/newDevice', (req, res) => {
     }
   }
   sendSnsMessage(message)
+  res.send('Dispositivo registrato');
   
   // insertNewDevice(connection, req, res)
 });
@@ -187,6 +190,7 @@ app.post('/updateDevice', (req, res) => {
     }
   }
   sendSnsMessage(message)
+  res.send('Dispositivo aggiornato');
 
   // updateDevice(connection, req, res)
 });
@@ -199,6 +203,7 @@ app.post('/deleteDevice', (req, res) => {
     }
   }
   sendSnsMessage(message)
+  res.send('Dispositivo eliminato');
 
   // deleteDevice(connection, req, res)
 });
