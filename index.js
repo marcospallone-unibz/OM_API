@@ -108,8 +108,8 @@ app.get('/singleDevice', (req, res) => {
   getDeviceByID(connection, req, res);
 });
 
-app.post('/register', async (req, res) => {
-  var users = await allUsersLength(connection);
+app.post('/register', (req, res) => {
+  var users = allUsersLength(connection);
   var company = users +1
   let message = {
     FunctionToCall: 'insertNewUser',
@@ -120,8 +120,10 @@ app.post('/register', async (req, res) => {
       company: company
     }
   }
-  sendSnsMessage(message)
-  res.send('Utente registrato');
+  setTimeout(() => {
+    sendSnsMessage(message)
+    res.send('Utente registrato');
+  }, 800)
 
   // insertNewUser(connection, req, res)
 });
