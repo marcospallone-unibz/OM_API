@@ -114,8 +114,7 @@ app.post('/register', (req, res) => {
     RequestData: {
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password,
-      company: req.body.company
+      password: req.body.password
     }
   }
   sendSnsMessage(message)

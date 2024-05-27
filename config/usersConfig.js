@@ -6,7 +6,7 @@ function createUsersTable(connection){
       name VARCHAR(255),
       email VARCHAR(255),
       password VARCHAR(255),
-      company INT
+      company INT AUTO_INCREMENT
     )
   `;
   
