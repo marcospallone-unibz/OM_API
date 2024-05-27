@@ -5,8 +5,9 @@ function allUsersLength(connection) {
       if (err) {
         console.log('Errore: ', err)
         return 0;
-      } else if (results.length > 0) {
+      } else if (results.length >= 0) {
         console.log('GET utenti a buon fine')
+        console.log(results.length)
         return results.length;
       } else {
         console.log('Richiesta errata')
