@@ -110,6 +110,7 @@ app.get('/singleDevice', (req, res) => {
 
 app.post('/register', (req, res) => {
   var users = allUsersLength(connection);
+  console.log(users)
   var company = users +1
   let message = {
     FunctionToCall: 'insertNewUser',
@@ -121,6 +122,7 @@ app.post('/register', (req, res) => {
     }
   }
   setTimeout(() => {
+    console.log('snsmessage')
     sendSnsMessage(message)
     res.send('Utente registrato');
   }, 800)
