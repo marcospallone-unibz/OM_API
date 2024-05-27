@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { insertNewUser, allUsersLength } = require('./controllers/users');
+const { insertNewUser } = require('./controllers/users');
 const { createUsersTable } = require('./config/usersConfig')
 const { createOfficiesTable } = require('./config/officesConfig')
 const mysql = require('mysql');
@@ -109,7 +109,18 @@ app.get('/singleDevice', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  insertNewUser(connection, req, res)
+  let message = {
+    FunctionToCall: 'insertNewUser',
+    RequestData: {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password
+    }
+  }
+  sendSnsMessage(message)
+  res.send('Utente registrato');
+
+  // insertNewUser(connection, req, res)
 });
 
 app.post('/login', (req, res) => {
@@ -165,7 +176,7 @@ app.post('/newDevice', (req, res) => {
   }
   sendSnsMessage(message)
   res.send('Dispositivo registrato');
-
+  
   // insertNewDevice(connection, req, res)
 });
 
