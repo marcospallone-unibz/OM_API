@@ -42,15 +42,16 @@ function insertNewUser(connection, req, res) {
     const results = allUsersLength(connection);
     company = results + 1;
   }
-  const insertUserQuery = 'INSERT INTO users (name, email, password, company) VALUES (?, ?, ?, ?)';
-  connection.query(insertUserQuery, [name, email, password, company], (error, results, fields) => {
-    if (error) {
-      console.error('Errore durante l\'inserimento dell\'utente:', error);
-      return res.status(500).json({ error: 'Errore durante l\'inserimento dell\'utente' });
-    }
-    console.log('Nuovo utente inserito con successo!');
-    res.status(200).json({ message: 'Nuovo utente inserito con successo!', code: 200});
-  });
+  consolelog(company)
+  // const insertUserQuery = 'INSERT INTO users (name, email, password, company) VALUES (?, ?, ?, ?)';
+  // connection.query(insertUserQuery, [name, email, password, company], (error, results, fields) => {
+  //   if (error) {
+  //     console.error('Errore durante l\'inserimento dell\'utente:', error);
+  //     return res.status(500).json({ error: 'Errore durante l\'inserimento dell\'utente' });
+  //   }
+  //   console.log('Nuovo utente inserito con successo!');
+  //   res.status(200).json({ message: 'Nuovo utente inserito con successo!', code: 200});
+  // });
 }
 
 module.exports = { allUsersLength, authenticateUser, insertNewUser }
