@@ -109,25 +109,7 @@ app.get('/singleDevice', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  var users = allUsersLength(connection);
-  setTimeout(() => {
-    console.log(users)
-    var company = users + 1
-    let message = {
-      FunctionToCall: 'insertNewUser',
-      RequestData: {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        company: company
-      }
-    }
-    console.log('snsmessage')
-    sendSnsMessage(message)
-    res.send('Utente registrato');
-  }, 800)
-
-  // insertNewUser(connection, req, res)
+  insertNewUser(connection, req, res)
 });
 
 app.post('/login', (req, res) => {
