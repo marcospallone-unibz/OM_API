@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { insertNewUser } = require('./controllers/users');
+const { insertNewUser, allUsersLength } = require('./controllers/users');
 const { createUsersTable } = require('./config/usersConfig')
 const { createOfficiesTable } = require('./config/officesConfig')
 const mysql = require('mysql');
@@ -109,12 +109,15 @@ app.get('/singleDevice', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
+  var users = allUsersLength(connection);
+  var company = users +1
   let message = {
     FunctionToCall: 'insertNewUser',
     RequestData: {
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      company: company
     }
   }
   sendSnsMessage(message)

@@ -53,4 +53,4 @@ function insertNewUser(connection, req, res) {
   });
 }
 
-module.exports = { authenticateUser, insertNewUser }
+module.exports = { allUsersLength, authenticateUser, insertNewUser }
