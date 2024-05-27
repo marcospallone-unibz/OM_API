@@ -110,18 +110,18 @@ app.get('/singleDevice', (req, res) => {
 
 app.post('/register', (req, res) => {
   var users = allUsersLength(connection);
-  console.log(users)
-  var company = users +1
-  let message = {
-    FunctionToCall: 'insertNewUser',
-    RequestData: {
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      company: company
-    }
-  }
   setTimeout(() => {
+    console.log(users)
+    var company = users + 1
+    let message = {
+      FunctionToCall: 'insertNewUser',
+      RequestData: {
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        company: company
+      }
+    }
     console.log('snsmessage')
     sendSnsMessage(message)
     res.send('Utente registrato');
@@ -183,7 +183,7 @@ app.post('/newDevice', (req, res) => {
   }
   sendSnsMessage(message)
   res.send('Dispositivo registrato');
-  
+
   // insertNewDevice(connection, req, res)
 });
 
