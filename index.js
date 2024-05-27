@@ -209,15 +209,9 @@ app.post('/deleteDevice', (req, res) => {
 });
 
 const setDB = (connection) => {
-  let message = {
-    FunctionToCall: 'createTables',
-    RequestData: {}
-  }
-  sendSnsMessage(message)
-
-  // createUsersTable(connection);
-  // createOfficiesTable(connection);
-  // createDevicesTable(connection);
+  createUsersTable(connection);
+  createOfficiesTable(connection);
+  createDevicesTable(connection);
 }
 
 const PORT = process.env.PORT || 3000;
