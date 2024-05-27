@@ -42,7 +42,7 @@ function insertNewUser(connection, req, res) {
     const results = allUsersLength(connection);
     company = results + 1;
   }
-  consolelog(company)
+  console.log(company)
   // const insertUserQuery = 'INSERT INTO users (name, email, password, company) VALUES (?, ?, ?, ?)';
   // connection.query(insertUserQuery, [name, email, password, company], (error, results, fields) => {
   //   if (error) {
