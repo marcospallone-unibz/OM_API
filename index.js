@@ -108,8 +108,8 @@ app.get('/singleDevice', (req, res) => {
   getDeviceByID(connection, req, res);
 });
 
-app.post('/register', (req, res) => {
-  var users = allUsersLength(connection);
+app.post('/register', async (req, res) => {
+  var users = await allUsersLength(connection);
   var company = users +1
   let message = {
     FunctionToCall: 'insertNewUser',
