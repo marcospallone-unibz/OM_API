@@ -9,7 +9,6 @@ const { allOffices, insertNewOffice, deleteOffice, getOfficeByID } = require('./
 const { createDevicesTable } = require('./config/devicesConfig');
 const { insertNewDevice, allDevices, getDeviceByID, updateDevice, deleteDevice } = require('./controllers/devices');
 const AWS = require('aws-sdk');
-const { createOperationLog } = require('./config/operationsConfig');
 const sns = new AWS.SNS({ region: 'us-east-1' }); // Assicurati di specificare la regione corretta
 
 const topicArn = 'arn:aws:sns:us-east-1:869141024194:om'; // Sostituisci con il tuo ARN del topic SNS
@@ -168,7 +167,7 @@ app.post('/deleteOffice', (req, res) => {
 
 app.post('/newDevice', (req, res) => {
   let message = {
-    func: 'insertNewDevice',
+    FunctionToCall: 'insertNewDevice',
     RequestData: {
       name: req.body.name,
       state: req.body.state,
@@ -212,7 +211,6 @@ const setDB = (connection) => {
   createUsersTable(connection);
   createOfficiesTable(connection);
   createDevicesTable(connection);
-  createOperationLog(connection);
 }
 
 const PORT = process.env.PORT || 3000;
