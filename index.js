@@ -12,7 +12,7 @@ const sns = new AWS.SNS({ region: 'us-east-1' }); // Assicurati di specificare l
 const winston = require('winston');
 const expressWinston = require('express-winston');
 const morgan = require('morgan');
-
+const sendMetric = require('./cloudwatch-metrics');
 
 const topicArn = 'arn:aws:sns:us-east-1:869141024194:om'; // Sostituisci con il tuo ARN del topic SNS
 
@@ -30,6 +30,18 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+
+app.use((req, res, next) => {
+  const start = Date.now();
+
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    sendMetric('ResponseTime', duration, 'Milliseconds');
+    sendMetric('RequestCount', 1, 'Count');
+  });
+
+  next();
+});
 
 // Configura il logger di Winston
 const logger = winston.createLogger({
