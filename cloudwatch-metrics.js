@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const cloudwatch = new AWS.CloudWatch({ region: 'your-region' });
+const cloudwatch = new AWS.CloudWatch({ region: 'us-east-1' });
 
 function sendMetric(metricName, value, unit) {
   const params = {
