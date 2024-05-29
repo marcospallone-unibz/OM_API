@@ -1,13 +1,12 @@
 const express = require('express');
 const cors = require('cors');
-const { insertNewUser } = require('./controllers/users');
 const { createUsersTable } = require('./config/usersConfig')
 const { createOfficiesTable } = require('./config/officesConfig')
 const mysql = require('mysql');
 const { authenticateUser } = require('./controllers/users')
-const { allOffices, insertNewOffice, deleteOffice, getOfficeByID } = require('./controllers/offices');
+const { allOffices, getOfficeByID } = require('./controllers/offices');
 const { createDevicesTable } = require('./config/devicesConfig');
-const { insertNewDevice, allDevices, getDeviceByID, updateDevice, deleteDevice } = require('./controllers/devices');
+const { allDevices, getDeviceByID } = require('./controllers/devices');
 const AWS = require('aws-sdk');
 const sns = new AWS.SNS({ region: 'us-east-1' }); // Assicurati di specificare la regione corretta
 
@@ -27,6 +26,43 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+
+// Configura il logger di Winston
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'combined.log' })
+  ],
+});
+
+// Configura Morgan per il logging delle richieste HTTP
+app.use(morgan('combined', {
+  stream: {
+    write: (message) => logger.info(message.trim()),
+  },
+}));
+
+// Middleware per registrare richieste con express-winston
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'requests.log' }),
+  ],
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.json()
+  ),
+  meta: true, // optional: control whether you want to log the meta data about the request (default to true)
+  msg: "HTTP {{req.method}} {{req.url}} - {{res.statusCode}} {{res.responseTime}}ms", // optional: customize the default logging message.
+  expressFormat: true, // Use the default Express/morgan request formatting
+  colorize: false, // Color the text and status code
+  ignoreRoute: function (req, res) { return false; } // optional: allows to skip some log messages based on request and/or response
+}));
 
 const connection = mysql.createConnection({
   host: 'om.cdjkupklvmzr.us-east-1.rds.amazonaws.com',
@@ -59,17 +95,6 @@ app.get('/offices', (req, res) => {
   // sendSnsMessage(message)
 
   allOffices(connection, req, res);
-});
-
-app.get('/test', (req, res) => {
-  let message = {
-    FunctionToCall: 'test',
-    RequestData: {
-      body: 'body'
-    }
-  }
-  console.log(res)
-  // sendSnsMessage(message)
 });
 
 app.get('/devices', (req, res) => {
