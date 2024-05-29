@@ -9,6 +9,10 @@ const { createDevicesTable } = require('./config/devicesConfig');
 const { allDevices, getDeviceByID } = require('./controllers/devices');
 const AWS = require('aws-sdk');
 const sns = new AWS.SNS({ region: 'us-east-1' }); // Assicurati di specificare la regione corretta
+const winston = require('winston');
+const expressWinston = require('express-winston');
+const morgan = require('morgan');
+
 
 const topicArn = 'arn:aws:sns:us-east-1:869141024194:om'; // Sostituisci con il tuo ARN del topic SNS
 
