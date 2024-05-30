@@ -154,7 +154,7 @@ app.get('/singleDevice', (req, res) => {
   res.send('GETDevice')
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   // let message = {
   //   FunctionToCall: 'insertNewUser',
   //   RequestData: {
@@ -166,11 +166,11 @@ app.post('/register', (req, res) => {
   // sendSnsMessage(message)
   // res.send('Utente registrato');
 
-  insertNewUser(connection, req, res)
-  // res.send('POSTUser')
+  const response = await insertNewUser(connection, req, res)
+  res.status(200).json({ message: 'Register effettuato!', code: 200});
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
   // let message = {
   //   FunctionToCall: 'authenticateUser',
   //   RequestData: {
@@ -180,8 +180,9 @@ app.post('/login', (req, res) => {
   // }
   // sendSnsMessage(message)
 
-  authenticateUser(connection, req, res)
-  res.send('Login')
+  const response = await authenticateUser(connection, req, res)
+  res.status(200).json({ message: 'Login effettuato!', code: 200, id: response[0].id, company: response[0].company});
+  // res.send('Login')
 });
 
 app.post('/newOffice', (req, res) => {
