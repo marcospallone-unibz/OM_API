@@ -167,7 +167,7 @@ app.post('/register', (req, res) => {
   // res.send('Utente registrato');
 
   insertNewUser(connection, req, res)
-  res.send('POSTUser')
+  // res.send('POSTUser')
 });
 
 app.post('/login', (req, res) => {
