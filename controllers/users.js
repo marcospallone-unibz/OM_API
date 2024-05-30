@@ -17,26 +17,29 @@ function allUsersLength(connection) {
 }
 
 async function authenticateUser(connection, req, res) {
-  const { email, password } = req.body
-  if (!email || !password) {
-    console.log('Email e password sono obbligatorie');
-  } else {
-    const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-    connection.query(query, [email, password], (err, results) => {
-      if (err) {
-        console.log('Errore: ', err)
-        return res.status(500).json({ error: 'Errore durante il login' });
-      } else if (results.length > 0) {
-        console.log('Login effettuato')
-        console.log('RES0',results[0])
-        return results[0]
-        // res.status(200).json({ message: 'Login effettuato!', code: 200, id: results[0].id, company: results[0].company});
-      } else {
-        console.log('Credenziali errate')
-        res.json({ message: 'Credenziali errate!' });
-      }
-    });
-  }
+  return new Promise((resolve, reject) => {
+    const { email, password } = req.body
+    if (!email || !password) {
+      console.log('Email e password sono obbligatorie');
+    } else {
+      const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
+      connection.query(query, [email, password], (err, results) => {
+        if (err) {
+          console.log('Errore: ', err)
+          return res.status(500).json({ error: 'Errore durante il login' });
+        } else if (results.length > 0) {
+          console.log('Login effettuato')
+          console.log('RES0',results[0])
+          resolve(results[0])
+          // res.status(200).json({ message: 'Login effettuato!', code: 200, id: results[0].id, company: results[0].company});
+        } else {
+          console.log('Credenziali errate')
+          res.json({ message: 'Credenziali errate!' });
+        }
+      });
+    }
+  })
+  
 }
 
 function insertNewUser(connection, req, res) {
