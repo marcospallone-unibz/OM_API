@@ -11,7 +11,7 @@ function allOffices(connection, req, res) {
         resolve(results);
       } else {
         console.log('Nessun ufficio')
-        reject(new Error("Nessun ufficio"));
+        resolve("Nessun ufficio");
       }
     });
   })
@@ -29,7 +29,7 @@ function getOfficeByID(connection, req, res) {
         resolve(results);
       } else {
         console.log('Nessun ufficio')
-        reject(new Error("Nessun ufficio"));
+        resolve("Nessun ufficio");
       }
     });
   })

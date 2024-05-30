@@ -27,14 +27,14 @@ async function authenticateUser(connection, req, res) {
       connection.query(query, [email, password], (err, results) => {
         if (err) {
           console.log('Errore: ', err)
-          reject(new Error("Errore durante la richiesta" +err));
+          reject(new Error("Errore durante la richiesta" + err));
         } else if (results.length > 0) {
           console.log('Login effettuato')
           console.log('RES0', results[0])
           resolve(results[0])
         } else {
           console.log('Credenziali errate')
-          reject(new Error("Credenziali errate"));
+          resolve("Credenziali errate");
         }
       });
     }
@@ -44,11 +44,12 @@ async function authenticateUser(connection, req, res) {
 
 async function insertNewUser(connection, req, res) {
   var { name, email, password, company } = req.body;
-    if (company == NaN) {
-      const results = await allUsersLength(connection);
-      company = results + 1;
-    }
-    console.log(company)
+  console.log('insertCOMPANY', company)
+  if (company == NaN) {
+    const results = await allUsersLength(connection);
+    company = results + 1;
+  }
+  console.log(company)
   return new Promise((resolve, reject) => {
     const insertUserQuery = 'INSERT INTO users (name, email, password, company) VALUES (?, ?, ?, ?)';
     connection.query(insertUserQuery, [name, email, password, company], (error, results, fields) => {
@@ -61,7 +62,7 @@ async function insertNewUser(connection, req, res) {
     });
   })
 
-  
+
 }
 
 module.exports = { authenticateUser, insertNewUser }

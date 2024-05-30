@@ -10,7 +10,7 @@ function allDevices(connection, req, res) {
         resolve(results);
       } else {
         console.log('Nessun device')
-        reject(new Error("Nessun device"));
+        resolve("Nessun device");
       }
     });
   })
@@ -28,7 +28,7 @@ function getDeviceByID(connection, req, res) {
         resolve(results);
       } else {
         console.log('Errore nella richiesta (?)')
-        reject(new Error("Nessun device"));
+        resolve("Nessun device");
       }
     });
   })
