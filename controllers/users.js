@@ -16,7 +16,7 @@ function allUsersLength(connection) {
     });
 }
 
-function authenticateUser(connection, req, res) {
+async function authenticateUser(connection, req, res) {
   const { email, password } = req.body
   if (!email || !password) {
     console.log('Email e password sono obbligatorie');
