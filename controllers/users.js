@@ -1,19 +1,20 @@
 
 function allUsersLength(connection) {
-  const query = 'SELECT * FROM users';
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM users';
     connection.query(query, (err, results) => {
       if (err) {
         console.log('Errore: ', err)
-        return 0;
+        reject(new Error("Errore durante la richiesta" + err));
       } else if (results.length >= 0) {
-        console.log('GET utenti a buon fine')
-        console.log(results.length)
-        return results.length;
+        resolve(results.length);
       } else {
         console.log('Richiesta errata')
-        return 0;
+        reject(new Error("Errore durante la richiesta"));
       }
     });
+  })
+
 }
 
 async function authenticateUser(connection, req, res) {
@@ -26,39 +27,41 @@ async function authenticateUser(connection, req, res) {
       connection.query(query, [email, password], (err, results) => {
         if (err) {
           console.log('Errore: ', err)
-          return res.status(500).json({ error: 'Errore durante il login' });
+          reject(new Error("Errore durante la richiesta" +err));
         } else if (results.length > 0) {
           console.log('Login effettuato')
-          console.log('RES0',results[0])
+          console.log('RES0', results[0])
           resolve(results[0])
-          // res.status(200).json({ message: 'Login effettuato!', code: 200, id: results[0].id, company: results[0].company});
         } else {
           console.log('Credenziali errate')
-          res.json({ message: 'Credenziali errate!' });
+          reject(new Error("Credenziali errate"));
         }
       });
     }
   })
+
+}
+
+async function insertNewUser(connection, req, res) {
+  var { name, email, password, company } = req.body;
+    if (company == NaN) {
+      const results = await allUsersLength(connection);
+      company = results + 1;
+    }
+    console.log(company)
+  return new Promise((resolve, reject) => {
+    const insertUserQuery = 'INSERT INTO users (name, email, password, company) VALUES (?, ?, ?, ?)';
+    connection.query(insertUserQuery, [name, email, password, company], (error, results, fields) => {
+      if (error) {
+        console.error('Errore durante l\'inserimento dell\'utente:', error);
+        reject(new Error("Errore durante l\'inserimento dell\'utente"));
+      }
+      console.log('Nuovo utente inserito con successo!');
+      resolve('Utente inserito')
+    });
+  })
+
   
 }
 
-function insertNewUser(connection, req, res) {
-  var { name, email, password, company } = req.body;
-  if(company == NaN){
-    const results = allUsersLength(connection);
-    company = results + 1;
-  }
-  console.log(company)
-  const insertUserQuery = 'INSERT INTO users (name, email, password, company) VALUES (?, ?, ?, ?)';
-  connection.query(insertUserQuery, [name, email, password, company], (error, results, fields) => {
-    if (error) {
-      console.error('Errore durante l\'inserimento dell\'utente:', error);
-      return res.status(500).json({ error: 'Errore durante l\'inserimento dell\'utente' });
-    }
-    console.log('Nuovo utente inserito con successo!');
-    return 'ok'
-    // res.status(200).json({ message: 'Nuovo utente inserito con successo!', code: 200});
-  });
-}
-
-module.exports = { allUsersLength, authenticateUser, insertNewUser }
+module.exports = { authenticateUser, insertNewUser }

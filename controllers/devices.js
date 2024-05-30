@@ -1,76 +1,87 @@
 function allDevices(connection, req, res) {
-
-  const query = 'SELECT * FROM devices WHERE office = ?';
-  connection.query(query, [req.query.id], (err, results) => {
-    if (err) {
-      console.log('Errore: ', err)
-      return res.status(500).json({ error: 'Errore' });
-    } else if (results.length > 0) {
-      console.log(results)
-      res.json({ message: 'Get all devices successful!', devices: results });
-    } else {
-      console.log('Errore nella richiesta (?)')
-      res.json({ message: 'Errore nella richiesta (?)' });
-    }
-  });
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM devices WHERE office = ?';
+    connection.query(query, [req.query.id], (err, results) => {
+      if (err) {
+        console.log('Errore: ', err)
+        reject(new Error("Errore"));
+      } else if (results.length > 0) {
+        console.log(results)
+        resolve(results);
+      } else {
+        console.log('Nessun device')
+        reject(new Error("Nessun device"));
+      }
+    });
+  })
 }
 
 function getDeviceByID(connection, req, res) {
-
-  const query = 'SELECT * FROM devices WHERE id = ?';
-  connection.query(query, [req.query.id], (err, results) => {
-    if (err) {
-      console.log('Errore: ', err)
-      return res.status(500).json({ error: 'Errore' });
-    } else if (results.length > 0) {
-      console.log(results)
-      res.json({ message: 'Get all devices successful!', device: results });
-    } else {
-      console.log('Errore nella richiesta (?)')
-      res.json({ message: 'Errore nella richiesta (?)' });
-    }
-  });
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM devices WHERE id = ?';
+    connection.query(query, [req.query.id], (err, results) => {
+      if (err) {
+        console.log('Errore: ', err)
+        reject(new Error("Errore"));
+      } else if (results.length > 0) {
+        console.log(results)
+        resolve(results);
+      } else {
+        console.log('Errore nella richiesta (?)')
+        reject(new Error("Nessun device"));
+      }
+    });
+  })
 }
 
 function insertNewDevice(connection, req, res) {
-  const { name, state, office } = req.body;
-  const insertDeviceQuery = 'INSERT INTO devices (name, state, office) VALUES (?, ?, ?)';
-  connection.query(insertDeviceQuery, [name, state, office], (error, results, fields) => {
-    if (error) {
-      console.error('Errore durante l\'inserimento del device:', error);
-      return res.status(500).json({ error: 'Errore durante l\'inserimento del device' });
-    }
-    console.log('Nuovo device inserito con successo!');
-    res.status(200).json({ message: 'Nuovo device inserito con successo!', code: 200 });
-  });
+  return new Promise((resolve, reject) => {
+    const { name, state, office } = req.body;
+    const insertDeviceQuery = 'INSERT INTO devices (name, state, office) VALUES (?, ?, ?)';
+    connection.query(insertDeviceQuery, [name, state, office], (error, results, fields) => {
+      if (error) {
+        console.error('Errore durante l\'inserimento del device:', error);
+        reject(new Error("Errore durante l\'inserimento del device"));
+      }
+      console.log('Nuovo device inserito con successo!');
+      // res.status(200).json({ message: 'Nuovo device inserito con successo!', code: 200 });
+      resolve('Nuovo device inserito con successo');
+    });
+  })
 }
 
 function updateDevice(connection, req, res) {
-  const { state, deviceId } = req.body;
-  console.log(state)
-  console.log(deviceId)
-  const insertDeviceQuery = 'UPDATE devices SET state = ? WHERE id = ?';
-  connection.query(insertDeviceQuery, [state, deviceId], (error, results, fields) => {
-    if (error) {
-      console.error('Errore durante l\'inserimento del device:', error);
-      return res.status(500).json({ error: 'Errore durante l\'inserimento del device' });
-    }
-    console.log('Nuovo device inserito con successo!');
-    res.status(200).json({ message: 'Nuovo device inserito con successo!', code: 200 });
-  });
+  return new Promise((resolve, reject) => {
+    const { state, deviceId } = req.body;
+    console.log(state)
+    console.log(deviceId)
+    const insertDeviceQuery = 'UPDATE devices SET state = ? WHERE id = ?';
+    connection.query(insertDeviceQuery, [state, deviceId], (error, results, fields) => {
+      if (error) {
+        console.error('Errore durante l\'inserimento del device:', error);
+        reject(new Error("Errore durante l\'inserimento del device"));
+      }
+      console.log('Nuovo device inserito con successo!');
+      // res.status(200).json({ message: 'Nuovo device inserito con successo!', code: 200 });
+      resolve('Nuovo device inserito con successo');
+    });
+  })
 }
 
 function deleteDevice(connection, req, res) {
-  const { id } = req.body;
-  const deleteDeviceQuery = 'DELETE FROM devices WHERE id = ?';
-  connection.query(deleteDeviceQuery, [id], (error, results, fields) => {
-    if (error) {
-      console.error('Errore durante l\'eliminazione del device:', error);
-      return res.status(500).json({ error: 'Errore durante l\'eliminazione del device' });
-    }
-    console.log('Device eliminato con successo!');
-    res.status(200).json({ message: 'Device eliminato con successo!', code: 200 });
-  });
+  return new Promise((resolve, reject) => {
+    const { id } = req.body;
+    const deleteDeviceQuery = 'DELETE FROM devices WHERE id = ?';
+    connection.query(deleteDeviceQuery, [id], (error, results, fields) => {
+      if (error) {
+        console.error('Errore durante l\'eliminazione del device:', error);
+        reject(new Error("Errore durante l\'eliminazione del device"));
+      }
+      console.log('Device eliminato con successo!');
+      // res.status(200).json({ message: 'Device eliminato con successo!', code: 200 });
+      resolve('Nuovo device eliminato con successo');
+    });
+  })
 }
 
 module.exports = { allDevices, getDeviceByID, insertNewDevice, updateDevice, deleteDevice }

@@ -101,7 +101,7 @@ app.all("/", function (req, res, next) {
   return next();
 });
 
-app.get('/offices', (req, res) => {
+app.get('/offices', async (req, res) => {
   // let message = {
   //   FunctionToCall: 'allOffices',
   //   RequestData: {
@@ -110,11 +110,11 @@ app.get('/offices', (req, res) => {
   // }
   // sendSnsMessage(message)
 
-  allOffices(connection, req, res);
-  res.send('GETUffici')
+  const response = await allOffices(connection, req, res);
+  res.send(response)
 });
 
-app.get('/devices', (req, res) => {
+app.get('/devices', async (req, res) => {
   // let message = {
   //   func: 'allDevices',
   //   RequestData: {
@@ -123,12 +123,12 @@ app.get('/devices', (req, res) => {
   // }
   // sendSnsMessage(message);
 
-  allDevices(connection, req, res);
-  res.send('GETDevices')
+  const response = await allDevices(connection, req, res);
+  res.send(response)
 
 });
 
-app.get('/singleOffice', (req, res) => {
+app.get('/singleOffice', async (req, res) => {
   // let message = {
   //   FunctionToCall: 'getOfficeByID',
   //   RequestData: {
@@ -137,11 +137,11 @@ app.get('/singleOffice', (req, res) => {
   // }
   // sendSnsMessage(message);
 
-  getOfficeByID(connection, req, res);
-  res.send('GETUfficio')
+  const response = await getOfficeByID(connection, req, res);
+  res.send(response)
 });
 
-app.get('/singleDevice', (req, res) => {
+app.get('/singleDevice', async (req, res) => {
   // let message = {
   //   FunctionToCall: 'getDeviceByID',
   //   RequestData: {
@@ -150,8 +150,8 @@ app.get('/singleDevice', (req, res) => {
   // }
   // sendSnsMessage(message)
 
-  getDeviceByID(connection, req, res);
-  res.send('GETDevice')
+  const response = await getDeviceByID(connection, req, res);
+  res.send(response)
 });
 
 app.post('/register', async (req, res) => {
@@ -166,7 +166,7 @@ app.post('/register', async (req, res) => {
   // sendSnsMessage(message)
   // res.send('Utente registrato');
 
-  const response = await insertNewUser(connection, req, res)
+  await insertNewUser(connection, req, res)
   res.status(200).json({ message: 'Register effettuato!', code: 200});
 });
 
@@ -181,12 +181,11 @@ app.post('/login', async (req, res) => {
   // sendSnsMessage(message)
 
   const response = await authenticateUser(connection, req, res)
-  console.log(response)
   res.status(200).json({ message: 'Login effettuato!', code: 200, id: response.id, company: response.company});
   // res.send('Login')
 });
 
-app.post('/newOffice', (req, res) => {
+app.post('/newOffice', async (req, res) => {
   // let message = {
   //   FunctionToCall: 'insertNewOffice',
   //   RequestData: {
@@ -198,12 +197,11 @@ app.post('/newOffice', (req, res) => {
   // }
   // sendSnsMessage(message)
 
-  insertNewOffice(connection, req, res)
-  res.send('Ufficio registrato');
-
+  await insertNewOffice(connection, req, res)
+  res.status(200).json({ message: 'Ufficio inserito!', code: 200});
 });
 
-app.post('/deleteOffice', (req, res) => {
+app.post('/deleteOffice', async (req, res) => {
   // let message = {
   //   FunctionToCall: 'deleteOffice',
   //   RequestData: {
@@ -213,11 +211,11 @@ app.post('/deleteOffice', (req, res) => {
   // sendSnsMessage(message)
   // res.send('Ufficio eliminato');
 
-  // deleteOffice(connection, req, res)
-  res.send('Ufficio eliminato');
+  await deleteOffice(connection, req, res)
+  res.status(200).json({ message: 'Ufficio eliminato!', code: 200});
 });
 
-app.post('/newDevice', (req, res) => {
+app.post('/newDevice', async (req, res) => {
   // let message = {
   //   FunctionToCall: 'insertNewDevice',
   //   RequestData: {
@@ -229,12 +227,11 @@ app.post('/newDevice', (req, res) => {
   // sendSnsMessage(message)
   // res.send('Dispositivo registrato');
   
-  insertNewDevice(connection, req, res)
-  res.send('Dispositivo registrato');
-
+  await insertNewDevice(connection, req, res)
+  res.status(200).json({ message: 'Dispositivo registrato!', code: 200});
 });
 
-app.post('/updateDevice', (req, res) => {
+app.post('/updateDevice', async (req, res) => {
   // let message = {
   //   FunctionToCall: 'updateDevice',
   //   RequestData: {
@@ -245,11 +242,11 @@ app.post('/updateDevice', (req, res) => {
   // sendSnsMessage(message)
   // res.send('Dispositivo aggiornato');
 
-  updateDevice(connection, req, res)
-  res.send('Dispositivo aggiornato');
+  await updateDevice(connection, req, res)
+  res.status(200).json({ message: 'Dispositivo registrato!', code: 200});
 });
 
-app.post('/deleteDevice', (req, res) => {
+app.post('/deleteDevice', async (req, res) => {
   // let message = {
   //   FunctionToCall: 'deleteDevice',
   //   RequestData: {
@@ -259,8 +256,8 @@ app.post('/deleteDevice', (req, res) => {
   // sendSnsMessage(message)
   // res.send('Dispositivo eliminato');
 
-  deleteDevice(connection, req, res)
-  res.send('Dispositivo eliminato');
+  await deleteDevice(connection, req, res)
+  res.status(200).json({ message: 'Dispositivo eliminato!', code: 200});
 });
 
 const setDB = (connection) => {
