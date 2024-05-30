@@ -45,7 +45,7 @@ async function authenticateUser(connection, req, res) {
 async function insertNewUser(connection, req, res) {
   var { name, email, password, company } = req.body;
   console.log('insertCOMPANY', company)
-  if (company == NaN) {
+  if (company == undefined) {
     const results = await allUsersLength(connection);
     company = results + 1;
   }
