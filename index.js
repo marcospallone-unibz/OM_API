@@ -111,6 +111,7 @@ app.get('/offices', (req, res) => {
   // sendSnsMessage(message)
 
   allOffices(connection, req, res);
+  res.send('GETUffici')
 });
 
 app.get('/devices', (req, res) => {
@@ -123,6 +124,8 @@ app.get('/devices', (req, res) => {
   // sendSnsMessage(message);
 
   allDevices(connection, req, res);
+  res.send('GETDevices')
+
 });
 
 app.get('/singleOffice', (req, res) => {
@@ -135,6 +138,7 @@ app.get('/singleOffice', (req, res) => {
   // sendSnsMessage(message);
 
   getOfficeByID(connection, req, res);
+  res.send('GETUfficio')
 });
 
 app.get('/singleDevice', (req, res) => {
@@ -147,21 +151,23 @@ app.get('/singleDevice', (req, res) => {
   // sendSnsMessage(message)
 
   getDeviceByID(connection, req, res);
+  res.send('GETDevice')
 });
 
 app.post('/register', (req, res) => {
-  let message = {
-    FunctionToCall: 'insertNewUser',
-    RequestData: {
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password
-    }
-  }
-  sendSnsMessage(message)
-  res.send('Utente registrato');
+  // let message = {
+  //   FunctionToCall: 'insertNewUser',
+  //   RequestData: {
+  //     name: req.body.name,
+  //     email: req.body.email,
+  //     password: req.body.password
+  //   }
+  // }
+  // sendSnsMessage(message)
+  // res.send('Utente registrato');
 
-  // insertNewUser(connection, req, res)
+  insertNewUser(connection, req, res)
+  res.send('POSTUser')
 });
 
 app.post('/login', (req, res) => {
@@ -175,77 +181,84 @@ app.post('/login', (req, res) => {
   // sendSnsMessage(message)
 
   authenticateUser(connection, req, res)
+  res.send('Login')
 });
 
 app.post('/newOffice', (req, res) => {
-  let message = {
-    FunctionToCall: 'insertNewOffice',
-    RequestData: {
-      name: req.body.name,
-      city: req.body.city,
-      address: req.body.address,
-      company: req.body.company
-    }
-  }
-  sendSnsMessage(message)
+  // let message = {
+  //   FunctionToCall: 'insertNewOffice',
+  //   RequestData: {
+  //     name: req.body.name,
+  //     city: req.body.city,
+  //     address: req.body.address,
+  //     company: req.body.company
+  //   }
+  // }
+  // sendSnsMessage(message)
+
+  insertNewOffice(connection, req, res)
   res.send('Ufficio registrato');
 
-  // insertNewOffice(connection, req, res)
 });
 
 app.post('/deleteOffice', (req, res) => {
-  let message = {
-    FunctionToCall: 'deleteOffice',
-    RequestData: {
-      id: req.body.id
-    }
-  }
-  sendSnsMessage(message)
-  res.send('Ufficio eliminato');
+  // let message = {
+  //   FunctionToCall: 'deleteOffice',
+  //   RequestData: {
+  //     id: req.body.id
+  //   }
+  // }
+  // sendSnsMessage(message)
+  // res.send('Ufficio eliminato');
 
   // deleteOffice(connection, req, res)
+  res.send('Ufficio eliminato');
 });
 
 app.post('/newDevice', (req, res) => {
-  let message = {
-    FunctionToCall: 'insertNewDevice',
-    RequestData: {
-      name: req.body.name,
-      state: req.body.state,
-      office: req.body.office
-    }
-  }
-  sendSnsMessage(message)
-  res.send('Dispositivo registrato');
+  // let message = {
+  //   FunctionToCall: 'insertNewDevice',
+  //   RequestData: {
+  //     name: req.body.name,
+  //     state: req.body.state,
+  //     office: req.body.office
+  //   }
+  // }
+  // sendSnsMessage(message)
+  // res.send('Dispositivo registrato');
   
-  // insertNewDevice(connection, req, res)
+  insertNewDevice(connection, req, res)
+  res.send('Dispositivo registrato');
+
 });
 
 app.post('/updateDevice', (req, res) => {
-  let message = {
-    FunctionToCall: 'updateDevice',
-    RequestData: {
-      state: req.body.state,
-      deviceId: req.body.deviceId
-    }
-  }
-  sendSnsMessage(message)
-  res.send('Dispositivo aggiornato');
+  // let message = {
+  //   FunctionToCall: 'updateDevice',
+  //   RequestData: {
+  //     state: req.body.state,
+  //     deviceId: req.body.deviceId
+  //   }
+  // }
+  // sendSnsMessage(message)
+  // res.send('Dispositivo aggiornato');
 
-  // updateDevice(connection, req, res)
+  updateDevice(connection, req, res)
+  res.send('Dispositivo aggiornato');
 });
 
 app.post('/deleteDevice', (req, res) => {
-  let message = {
-    FunctionToCall: 'deleteDevice',
-    RequestData: {
-      id: req.body.id
-    }
-  }
-  sendSnsMessage(message)
-  res.send('Dispositivo eliminato');
+  // let message = {
+  //   FunctionToCall: 'deleteDevice',
+  //   RequestData: {
+  //     id: req.body.id
+  //   }
+  // }
+  // sendSnsMessage(message)
+  // res.send('Dispositivo eliminato');
 
-  // deleteDevice(connection, req, res)
+  deleteDevice(connection, req, res)
+  res.send('Dispositivo eliminato');
 });
 
 const setDB = (connection) => {
@@ -257,5 +270,5 @@ const setDB = (connection) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   setDB(connection)
-  console.log(`Server in ascolto sulla porta ${PORT}`);
+  console.log(`Server è in ascolto sulla porta ${PORT}`);
 });

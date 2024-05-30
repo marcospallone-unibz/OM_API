@@ -10,7 +10,7 @@ function sendMetric(metricName, value, unit) {
         Value: value,
       },
     ],
-    Namespace: 'namespace'
+    Namespace: 'namespaceAPI'
   };
 
   cloudwatch.putMetricData(params, (err, data) => {
