@@ -181,7 +181,8 @@ app.post('/login', async (req, res) => {
   // sendSnsMessage(message)
 
   const response = await authenticateUser(connection, req, res)
-  res.status(200).json({ message: 'Login effettuato!', code: 200, id: response[0].id, company: response[0].company});
+  console.log(response)
+  res.status(200).json({ message: 'Login effettuato!', code: 200, id: response.id, company: response.company});
   // res.send('Login')
 });
 
