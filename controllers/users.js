@@ -14,7 +14,6 @@ function allUsersLength(connection) {
       }
     });
   })
-
 }
 
 async function authenticateUser(connection, req, res) {
@@ -39,7 +38,6 @@ async function authenticateUser(connection, req, res) {
       });
     }
   })
-
 }
 
 async function insertNewUser(connection, req, res) {
@@ -50,7 +48,7 @@ async function insertNewUser(connection, req, res) {
     company = results + 1;
   }
   console.log(company)
-  return new Promise((resolve, reject) => {
+  await new Promise((resolve, reject) => {
     const insertUserQuery = 'INSERT INTO users (name, email, password, company) VALUES (?, ?, ?, ?)';
     connection.query(insertUserQuery, [name, email, password, company], (error, results, fields) => {
       if (error) {
@@ -61,8 +59,6 @@ async function insertNewUser(connection, req, res) {
       resolve('Utente inserito')
     });
   })
-
-
 }
 
 module.exports = { authenticateUser, insertNewUser }
