@@ -21,7 +21,6 @@ const sendSnsMessage = (message) => {
     Message: JSON.stringify(message),
     TopicArn: topicArn
   };
-
   return sns.publish(params).promise();
 };
 
@@ -167,7 +166,7 @@ app.post('/register', async (req, res) => {
   // res.send('Utente registrato');
 
   await insertNewUser(connection, req, res)
-  res.status(200).json({ message: 'Register effettuato!', code: 200});
+  res.status(200).json({ message: 'Register effettuato!', code: 200}).send();
 });
 
 app.post('/login', async (req, res) => {
@@ -181,7 +180,7 @@ app.post('/login', async (req, res) => {
   // sendSnsMessage(message)
 
   const response = await authenticateUser(connection, req, res)
-  res.status(200).json({ message: 'Login effettuato!', code: 200, id: response.id, company: response.company});
+  res.status(200).json({ message: 'Login effettuato!', code: 200, id: response.id, company: response.company}).send();
   // res.send('Login')
 });
 
@@ -198,7 +197,7 @@ app.post('/newOffice', async (req, res) => {
   // sendSnsMessage(message)
 
   await insertNewOffice(connection, req, res)
-  res.status(200).json({ message: 'Ufficio inserito!', code: 200});
+  res.status(200).json({ message: 'Ufficio inserito!', code: 200}).send();
 });
 
 app.post('/deleteOffice', async (req, res) => {
@@ -212,7 +211,7 @@ app.post('/deleteOffice', async (req, res) => {
   // res.send('Ufficio eliminato');
 
   await deleteOffice(connection, req, res)
-  res.status(200).json({ message: 'Ufficio eliminato!', code: 200});
+  res.status(200).json({ message: 'Ufficio eliminato!', code: 200}).send();
 });
 
 app.post('/newDevice', async (req, res) => {
@@ -228,7 +227,7 @@ app.post('/newDevice', async (req, res) => {
   // res.send('Dispositivo registrato');
   
   await insertNewDevice(connection, req, res)
-  res.status(200).json({ message: 'Dispositivo registrato!', code: 200});
+  res.status(200).json({ message: 'Dispositivo registrato!', code: 200}).send();
 });
 
 app.post('/updateDevice', async (req, res) => {
@@ -243,7 +242,7 @@ app.post('/updateDevice', async (req, res) => {
   // res.send('Dispositivo aggiornato');
 
   await updateDevice(connection, req, res)
-  res.status(200).json({ message: 'Dispositivo registrato!', code: 200});
+  res.status(200).json({ message: 'Dispositivo registrato!', code: 200}).send();
 });
 
 app.post('/deleteDevice', async (req, res) => {
@@ -257,7 +256,7 @@ app.post('/deleteDevice', async (req, res) => {
   // res.send('Dispositivo eliminato');
 
   await deleteDevice(connection, req, res)
-  res.status(200).json({ message: 'Dispositivo eliminato!', code: 200});
+  res.status(200).json({ message: 'Dispositivo eliminato!', code: 200}).send();
 });
 
 const setDB = (connection) => {
