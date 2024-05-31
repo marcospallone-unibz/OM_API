@@ -80,7 +80,7 @@ app.use(expressWinston.logger({
 }));
 
 const connection = mysql.createConnection({
-  host: 'om.cdjkupklvmzr.us-east-1.rds.amazonaws.com',
+  host: 'om.ca4nvvqg6tk3.us-east-1.rds.amazonaws.com',
   user: 'admin',
   password: 'password',
   database: 'om',
