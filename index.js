@@ -17,6 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const QRCode = require('qrcode');
 const { insertNewEmployee, allEmployees, deleteEmployee, updateEmployee } = require('./controllers/employees');
+const { createEmployeesTable } = require('./config/employeesConfig');
 
 const app = express();
 
@@ -205,6 +206,7 @@ const setDB = (connection) => {
   createUsersTable(connection);
   createOfficiesTable(connection);
   createDevicesTable(connection);
+  createEmployeesTable(connection);
 }
 
 const PORT = process.env.PORT || 3000;
