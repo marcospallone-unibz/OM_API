@@ -29,7 +29,6 @@ async function authenticateUser(connection, req, res) {
           reject(new Error("Errore durante la richiesta" + err));
         } else if (results.length > 0) {
           console.log('Login effettuato')
-          console.log('RES0', results[0])
           resolve(results[0])
         } else {
           console.log('Credenziali errate')
@@ -42,12 +41,10 @@ async function authenticateUser(connection, req, res) {
 
 async function insertNewUser(connection, req, res) {
   var { name, email, password, company } = req.body;
-  console.log('insertCOMPANY', company)
   if (company == undefined) {
     const results = await allUsersLength(connection);
     company = results + 1;
   }
-  console.log(company)
   await new Promise((resolve, reject) => {
     const insertUserQuery = 'INSERT INTO users (name, email, password, company) VALUES (?, ?, ?, ?)';
     connection.query(insertUserQuery, [name, email, password, company], (error, results, fields) => {

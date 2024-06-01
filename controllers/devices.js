@@ -44,7 +44,6 @@ function insertNewDevice(connection, req, res) {
         reject(new Error("Errore durante l\'inserimento del device"));
       }
       console.log('Nuovo device inserito con successo!');
-      // res.status(200).json({ message: 'Nuovo device inserito con successo!', code: 200 });
       resolve('Nuovo device inserito con successo');
     });
   })
@@ -53,17 +52,14 @@ function insertNewDevice(connection, req, res) {
 function updateDevice(connection, req, res) {
   return new Promise((resolve, reject) => {
     const { state, deviceId } = req.body;
-    console.log(state)
-    console.log(deviceId)
-    const insertDeviceQuery = 'UPDATE devices SET state = ? WHERE id = ?';
-    connection.query(insertDeviceQuery, [state, deviceId], (error, results, fields) => {
+    const updateDeviceQuery = 'UPDATE devices SET state = ? WHERE id = ?';
+    connection.query(updateDeviceQuery, [state, deviceId], (error, results, fields) => {
       if (error) {
-        console.error('Errore durante l\'inserimento del device:', error);
-        reject(new Error("Errore durante l\'inserimento del device"));
+        console.error('Errore durante l\'aggiornamento del device:', error);
+        reject(new Error("Errore durante l\'aggiornamento del device"));
       }
-      console.log('Nuovo device inserito con successo!');
-      // res.status(200).json({ message: 'Nuovo device inserito con successo!', code: 200 });
-      resolve('Nuovo device inserito con successo');
+      console.log('Device aggiornato con successo!');
+      resolve('Device aggiornato con successo');
     });
   })
 }
@@ -78,7 +74,6 @@ function deleteDevice(connection, req, res) {
         reject(new Error("Errore durante l\'eliminazione del device"));
       }
       console.log('Device eliminato con successo!');
-      // res.status(200).json({ message: 'Device eliminato con successo!', code: 200 });
       resolve('Nuovo device eliminato con successo');
     });
   })

@@ -1,4 +1,3 @@
-const companyID = null;
 function allOffices(connection, req, res) {
   return new Promise((resolve, reject) => {
     const query = 'SELECT * FROM offices WHERE company = ?';
@@ -46,7 +45,6 @@ function insertNewOffice(connection, req, res) {
       reject(new Error("Errore durante l\'inserimento dell\'ufficio:"));
     }
     console.log('Nuovo ufficio inserito con successo!');
-    // res.status(200).json({ message: 'Nuovo ufficio inserito con successo!', code: 200 });
     resolve('Nuovo ufficio inserito con successo!');
   });
   })
@@ -63,11 +61,9 @@ function deleteOffice(connection, req, res) {
       reject(new Error("Errore durante l\'eliminazione dell\'ufficio:"));
     }
     console.log('Ufficio eliminato con successo!');
-    // res.status(200).json({ message: 'Ufficio eliminato con successo!', code: 200 });
     resolve('Ufficio eliminato con successo!');
   });
   })
-  
 }
 
 module.exports = { allOffices, getOfficeByID, insertNewOffice, deleteOffice }
