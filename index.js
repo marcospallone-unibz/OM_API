@@ -265,7 +265,8 @@ app.post('/deleteDevice', async (req, res) => {
 
 app.post('/generateQR', async (req, res) => {
   try {
-
+    const bucket = 'om-qr';
+    const key = `${Date.now()}-QR.png`
     // Genera il QR Code e salvalo come file temporaneo
     const qrCodePath = path.join(__dirname, 'qrcode.png');
     await QRCode.toFile(qrCodePath, 'qrcode-door');
@@ -275,8 +276,8 @@ app.post('/generateQR', async (req, res) => {
 
     // Configura i parametri per il caricamento su S3
     const params = {
-      Bucket: 'om-qr',
-      Key: `${Date.now()}.png`,
+      Bucket: bucket,
+      Key: key,
       Body: fileContent,
       ContentType: 'image/png',
     };
@@ -287,8 +288,14 @@ app.post('/generateQR', async (req, res) => {
     // Rimuovi il file temporaneo
     fs.unlinkSync(qrCodePath);
 
+    const presignedUrl = s3.getSignedUrl('getObject', {
+      Bucket: bucket,
+      Key: key,
+      Expires: 60 * 2 // Il link scade dopo 5 minuti
+    });
+
     // Rispondi con l'URL del file caricato
-    res.status(200).json({ url: data.Location }).send();
+    res.status(200).json({ url: data.Location, code: 200 }).send();
   } catch (error) {
     console.error('Errore nella generazione o caricamento del QR Code:', error);
     res.status(500).json({ error: 'Errore interno del server' });
