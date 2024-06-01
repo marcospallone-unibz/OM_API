@@ -19,7 +19,7 @@ function allEmployees(connection, req, res) {
   async function insertNewEmployee(connection, req, res) {
     var { name, email, phone, company } = req.body;
     await new Promise((resolve, reject) => {
-      const insertUserQuery = 'INSERT INTO users (name, email, phone, company) VALUES (?, ?, ?, ?)';
+      const insertUserQuery = 'INSERT INTO employees (name, email, phone, company) VALUES (?, ?, ?, ?)';
       connection.query(insertUserQuery, [name, email, phone, company], (error, results, fields) => {
         if (error) {
           console.error('Errore durante l\'inserimento del dipendente:', error);
