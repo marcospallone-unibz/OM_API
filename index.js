@@ -9,9 +9,9 @@ const { createDevicesTable } = require('./config/devicesConfig');
 const { allDevices, getDeviceByID, insertNewDevice, deleteDevice, updateDevice } = require('./controllers/devices');
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
-const winston = require('winston');
-const expressWinston = require('express-winston');
-const morgan = require('morgan');
+// const winston = require('winston');
+// const expressWinston = require('express-winston');
+// const morgan = require('morgan');
 const sendMetric = require('./cloudwatch-metrics');
 const fs = require('fs');
 const path = require('path');
@@ -37,39 +37,39 @@ app.use((req, res, next) => {
   next();
 });
 
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'combined.log' })
-  ],
-});
+// const logger = winston.createLogger({
+//   level: 'info',
+//   format: winston.format.combine(
+//     winston.format.timestamp(),
+//     winston.format.json()
+//   ),
+//   transports: [
+//     new winston.transports.Console(),
+//     new winston.transports.File({ filename: 'combined.log' })
+//   ],
+// });
 
-app.use(morgan('combined', {
-  stream: {
-    write: (message) => logger.info(message.trim()),
-  },
-}));
+// app.use(morgan('combined', {
+//   stream: {
+//     write: (message) => logger.info(message.trim()),
+//   },
+// }));
 
-app.use(expressWinston.logger({
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'requests.log' }),
-  ],
-  format: winston.format.combine(
-    winston.format.colorize(),
-    winston.format.json()
-  ),
-  meta: true, 
-  msg: "HTTP {{req.method}} {{req.url}} - {{res.statusCode}} {{res.responseTime}}ms", 
-  expressFormat: true,
-  colorize: false, 
-  ignoreRoute: function (req, res) { return false; }
-}));
+// app.use(expressWinston.logger({
+//   transports: [
+//     new winston.transports.Console(),
+//     new winston.transports.File({ filename: 'requests.log' }),
+//   ],
+//   format: winston.format.combine(
+//     winston.format.colorize(),
+//     winston.format.json()
+//   ),
+//   meta: true, 
+//   msg: "HTTP {{req.method}} {{req.url}} - {{res.statusCode}} {{res.responseTime}}ms", 
+//   expressFormat: true,
+//   colorize: false, 
+//   ignoreRoute: function (req, res) { return false; }
+// }));
 
 const connection = mysql.createConnection({
   host: 'om.ca4nvvqg6tk3.us-east-1.rds.amazonaws.com',
