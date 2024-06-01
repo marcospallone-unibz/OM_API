@@ -9,10 +9,14 @@ const { createDevicesTable } = require('./config/devicesConfig');
 const { allDevices, getDeviceByID, insertNewDevice, deleteDevice, updateDevice } = require('./controllers/devices');
 const AWS = require('aws-sdk');
 const sns = new AWS.SNS({ region: 'us-east-1' }); // Assicurati di specificare la regione corretta
+const s3 = new AWS.SNS({ region: 'us-east-1' }); // Assicurati di specificare la regione corretta
 const winston = require('winston');
 const expressWinston = require('express-winston');
 const morgan = require('morgan');
 const sendMetric = require('./cloudwatch-metrics');
+const fs = require('fs');
+const path = require('path');
+const QRCode = require('qrcode');
 
 const topicArn = 'arn:aws:sns:us-east-1:869141024194:om'; // Sostituisci con il tuo ARN del topic SNS
 
@@ -257,6 +261,38 @@ app.post('/deleteDevice', async (req, res) => {
 
   await deleteDevice(connection, req, res)
   res.status(200).json({ message: 'Dispositivo eliminato!', code: 200}).send();
+});
+
+app.post('/generateQR', async (req, res) => {
+  try {
+
+    // Genera il QR Code e salvalo come file temporaneo
+    const qrCodePath = path.join(__dirname, 'qrcode.png');
+    await QRCode.toFile(qrCodePath, 'qrcode-door');
+
+    // Leggi il file generato
+    const fileContent = fs.readFileSync(qrCodePath);
+
+    // Configura i parametri per il caricamento su S3
+    const params = {
+      Bucket: 'om-qr',
+      Key: `${Date.now()}.png`,
+      Body: fileContent,
+      ContentType: 'image/png',
+    };
+
+    // Carica il file su S3
+    const data = await s3.upload(params).promise();
+
+    // Rimuovi il file temporaneo
+    fs.unlinkSync(qrCodePath);
+
+    // Rispondi con l'URL del file caricato
+    res.status(200).json({ url: data.Location }).send();
+  } catch (error) {
+    console.error('Errore nella generazione o caricamento del QR Code:', error);
+    res.status(500).json({ error: 'Errore interno del server' });
+  }
 });
 
 const setDB = (connection) => {
