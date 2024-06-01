@@ -33,9 +33,9 @@ function allEmployees(connection, req, res) {
 
   function updateEmployee(connection, req, res) {
     return new Promise((resolve, reject) => {
-      const { id, name, email, phone, company } = req.body;
-      const updateEmployeeQuery = 'UPDATE employees SET name = ?, email = ?, phone = ?, company = ? WHERE id = ?';
-      connection.query(updateEmployeeQuery, [name, email, phone, company, id], (error, results, fields) => {
+      const { id, name, email, phone } = req.body;
+      const updateEmployeeQuery = 'UPDATE employees SET name = ?, email = ?, phone = ? WHERE id = ?';
+      connection.query(updateEmployeeQuery, [name, email, phone, id], (error, results, fields) => {
         if (error) {
           console.error('Errore durante l\'aggiornamento del dipendente:', error);
           reject(new Error("Errore durante l\'aggiornamento del dipendente"));
