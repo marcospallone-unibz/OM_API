@@ -283,7 +283,7 @@ app.post('/generateQR', async (req, res) => {
     };
 
     // Carica il file su S3
-    const data = await s3.upload(params).promise();
+    await s3.upload(params).promise();
 
     // Rimuovi il file temporaneo
     fs.unlinkSync(qrCodePath);
@@ -295,7 +295,7 @@ app.post('/generateQR', async (req, res) => {
     });
 
     // Rispondi con l'URL del file caricato
-    res.status(200).json({ url: data.Location, code: 200 }).send();
+    res.status(200).json({ url: presignedUrl, code: 200 }).send();
   } catch (error) {
     console.error('Errore nella generazione o caricamento del QR Code:', error);
     res.status(500).json({ error: 'Errore interno del server' });
